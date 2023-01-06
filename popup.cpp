@@ -78,7 +78,7 @@ void PopUp::show()
     QWidget::show();
 
     animation.start();
-    timer->start(20000);
+    timer->start(10000);
 }
 
 void PopUp::moveUp(const int x)
@@ -87,7 +87,7 @@ void PopUp::moveUp(const int x)
 //    movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
     m_animation_moveup.setStartValue(pos().y());
     m_animation_moveup.setEndValue(pos().y() - x);
-    m_animation_moveup.setDuration(3000);
+    m_animation_moveup.setDuration(1000);
     m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
     m_animation_moveup.start();
 //    m_animation_moveup.setStartValue(pos());

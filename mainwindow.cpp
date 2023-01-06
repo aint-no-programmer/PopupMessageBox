@@ -20,12 +20,14 @@ void MainWindow::on_pushButton_clicked()
     popUp->setPopupText(ui->textEdit->toPlainText());
 
     //aintnop.todo add removing deleted <popup> elements from QVector
-//    for (const auto e : m_popups)
-//    {
-//        e->moveUp(30);
-//    }
+    for (const auto e : m_popups)
+    {
+        e->moveUp(popUp->height());
+    }
 
     popUp->show();
-    popUp->moveUp(300);
     m_popups.push_front(popUp);
+    connect(popUp, &PopUp::destroyed, [this, popUp](){
+        m_popups.removeOne(popUp);
+    });
 }
