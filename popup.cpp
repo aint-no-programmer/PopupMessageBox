@@ -14,6 +14,13 @@ PopUp::PopUp(QWidget *parent) : QWidget(parent)
 
     animation.setTargetObject(this);                // Set the target animation
     animation.setPropertyName("popupOpacity");      //
+
+    /*add auxiliary animation >>>>>>>>>>>>>>>>*/
+    m_animation_moveup.setTargetObject(this);
+    m_animation_moveup.setPropertyName("popupMoveup");
+    connect(this, &PopUp::s_moved, this, &PopUp::onMoved);
+    /*<<<<<<<<<<<<<<<<<<<<<<< add auxiliary animation*/
+
     connect(&animation, &QAbstractAnimation::finished, this, &PopUp::hide);
 
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -27,7 +34,8 @@ PopUp::PopUp(QWidget *parent) : QWidget(parent)
     setLayout(&layout);
 
     timer = new QTimer();
-    connect(timer, &QTimer::timeout, this, &PopUp::hideAnimation);
+//    connect(timer, &QTimer::timeout, this, &PopUp::hideAnimation);
+    connect(timer, &QTimer::timeout, this, &PopUp::deleteLater);
 }
 
 void PopUp::paintEvent(QPaintEvent *event)
@@ -59,7 +67,7 @@ void PopUp::show()
 {
     setWindowOpacity(0.0);  // Set the transparency to zero
 
-    animation.setDuration(150);     // Configuring the duration of the animation
+    animation.setDuration(1000);     // Configuring the duration of the animation
     animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
     animation.setEndValue(1.0);     // End - completely opaque widget
 
@@ -70,7 +78,22 @@ void PopUp::show()
     QWidget::show();
 
     animation.start();
-    timer->start(3000);
+    timer->start(20000);
+}
+
+void PopUp::moveUp(const int x)
+{
+//    const auto movementAnimation = new QPropertyAnimation(this, "pos");
+//    movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
+    m_animation_moveup.setStartValue(pos().y());
+    m_animation_moveup.setEndValue(pos().y() - x);
+    m_animation_moveup.setDuration(3000);
+    m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
+    m_animation_moveup.start();
+//    m_animation_moveup.setStartValue(pos());
+//    m_animation_moveup.setEndValue(QPoint(pos().x(), pos().y() - x));
+//    m_animation_moveup.setDuration(3000);
+//    m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
 }
 
 void PopUp::hideAnimation()

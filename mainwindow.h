@@ -4,6 +4,8 @@
 #include <QMainWindow>
 
 #include "popup.h"
+#include <QVector>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    PopUp *popUp;
+    QVector<PopUp*> m_popups;
+//    PopUp *popUp;
 };
 #endif // MAINWINDOW_H
