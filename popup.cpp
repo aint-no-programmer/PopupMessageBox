@@ -83,17 +83,18 @@ void PopUp::show()
 
 void PopUp::moveUp(const int x)
 {
-//    const auto movementAnimation = new QPropertyAnimation(this, "pos");
-//    movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
-    m_animation_moveup.setStartValue(pos().y());
-    m_animation_moveup.setEndValue(pos().y() - x);
-    m_animation_moveup.setDuration(1000);
-    m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
-    m_animation_moveup.start();
-//    m_animation_moveup.setStartValue(pos());
-//    m_animation_moveup.setEndValue(QPoint(pos().x(), pos().y() - x));
-//    m_animation_moveup.setDuration(3000);
+    const auto movementAnimation = new QPropertyAnimation(this, "pos");
+    movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
+    movementAnimation->setEasingCurve(QEasingCurve::OutElastic);
+    movementAnimation->start();
+
+
+//    m_animation_moveup.setStartValue(pos().y());
+//    m_animation_moveup.setEndValue(pos().y() - x);
+//    m_animation_moveup.setDuration(1000);
 //    m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
+//    m_animation_moveup.start();
+
 }
 
 void PopUp::hideAnimation()
