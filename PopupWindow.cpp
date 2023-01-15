@@ -62,9 +62,26 @@ void PopupWindow::paintEvent(QPaintEvent *event)
 
 void PopupWindow::setText(const QString &t_title, const QString &t_message)
 {
-    m_title.setText(t_title);
-    m_message.setText(t_message);    // Set the text in the Label
-    adjustSize();           // With the recalculation notice sizes
+    auto wordWrapper = [](const QString& t_message, unsigned int t_line_length = 50){
+        QString output_msg;
+        unsigned int counter = 0;
+        for (const auto& it : t_message.split(" "))
+        {
+            counter += it.size();
+            output_msg.append(it).append(' ');
+            if (counter > t_line_length)
+            {
+                output_msg.append(" \n");
+                counter = 0;
+            }
+        }
+
+        return output_msg;
+    };
+
+    m_title.setText(wordWrapper(t_title, 30));
+    m_message.setText(wordWrapper(t_message));      // Set the text in the Label
+    adjustSize();                                   // With the recalculation notice sizes
 }
 
 void PopupWindow::show()
