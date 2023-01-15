@@ -54,13 +54,13 @@ void PopupWindow::paintEvent(QPaintEvent *event)
     roundedRect.setWidth(rect().width() - 10);
     roundedRect.setHeight(rect().height() - 10);
 
-    painter.setBrush(QBrush(QColor(0,0,0,180)));
+    painter.setBrush(QBrush(m_color));
     painter.setPen(Qt::NoPen);
 
     painter.drawRoundedRect(roundedRect, 10, 10);
 }
 
-void PopupWindow::setText(const QString &t_title, const QString &t_message)
+void PopupWindow::createMessage(const QString &t_title, const QString &t_message, const QColor &t_color)
 {
     auto wordWrapper = [](const QString& t_message, unsigned int t_line_length = 50){
         QString output_msg;
@@ -78,6 +78,11 @@ void PopupWindow::setText(const QString &t_title, const QString &t_message)
 
         return output_msg;
     };
+
+    if (m_color != t_color)
+    {
+        m_color = t_color;
+    }
 
     m_title.setText(wordWrapper(t_title, 30));
     m_message.setText(wordWrapper(t_message));      // Set the text in the Label

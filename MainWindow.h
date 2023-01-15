@@ -23,6 +23,7 @@ private slots:
     void on_pushButton_clicked();
 
 private:
+    QColor m_color{0,0,0,180};
     Ui::MainWindow *ui;
     QVector<PopupWindow*> m_popups;
 //    PopUp *popUp;
