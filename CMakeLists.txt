@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(popup_messagebox LANGUAGES CXX)
+project(PopupMessageBox LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
