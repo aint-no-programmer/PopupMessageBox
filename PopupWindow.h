@@ -22,8 +22,6 @@ public:
     {
         hideAnimation();
     }
-//signals:
-//    void s_moved();
 protected:
     void paintEvent(QPaintEvent *event);    // The background will be drawn through the redraw method
  

@@ -1,8 +1,14 @@
 #include "PopupWindow.h"
 #include <QPainter>
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QDebug>
+
+
+
+
+#include <QDesktopWidget>
+#include <QThread>
 
 PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
 {
@@ -65,8 +71,8 @@ void PopupWindow::show()
     animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
     animation.setEndValue(1.0);     // End - completely opaque widget
 
-    setGeometry(QApplication::desktop()->availableGeometry().width() - 36 - width() + QApplication::desktop() -> availableGeometry().x(),
-                QApplication::desktop()->availableGeometry().height() - 36 - height() + QApplication::desktop() -> availableGeometry().y(),
+    setGeometry(QApplication::primaryScreen()->availableGeometry().width() - width(),
+                QApplication::primaryScreen()->availableGeometry().height() - height(),
                 width(),
                 height());
     QWidget::show();
@@ -81,12 +87,6 @@ void PopupWindow::moveUp(const int x)
     movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
     movementAnimation->setEasingCurve(QEasingCurve::OutElastic);
     movementAnimation->start();
-
-//    m_animation_moveup.setStartValue(pos().y());
-//    m_animation_moveup.setEndValue(pos().y() - x);
-//    m_animation_moveup.setDuration(1000);
-//    m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
-//    m_animation_moveup.start();
 }
 
 void PopupWindow::hideAnimation()
@@ -96,6 +96,7 @@ void PopupWindow::hideAnimation()
     animation.setStartValue(1.0);
     animation.setEndValue(0.0);
     animation.start();
+    QThread::currentThread()->sleep(1);
 }
 
 void PopupWindow::hide()
