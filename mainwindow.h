@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "popup.h"
+#include "popupwindow.h"
 #include <QVector>
 
 
@@ -24,7 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QVector<PopUp*> m_popups;
+    QVector<PopupWindow*> m_popups;
 //    PopUp *popUp;
 };
 #endif // MAINWINDOW_H

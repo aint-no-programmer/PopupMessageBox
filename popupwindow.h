@@ -7,7 +7,7 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 
-class PopUp : public QWidget
+class PopupWindow : public QWidget
 {
     Q_OBJECT
  
@@ -17,8 +17,8 @@ class PopUp : public QWidget
     float getPopupOpacity() const;
  
 public:
-    explicit PopUp(QWidget *parent = 0);
-    ~PopUp() override
+    explicit PopupWindow(QWidget *parent = 0);
+    ~PopupWindow() override
     {
         hideAnimation();
     }

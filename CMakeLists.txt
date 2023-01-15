@@ -18,8 +18,8 @@ add_executable(popup_messagebox
     main.cpp
     mainwindow.cpp
     mainwindow.h
-    popup.cpp
-    popup.h
+    popupwindow.cpp
+    popupwindow.h
     mainwindow.ui
 )
 

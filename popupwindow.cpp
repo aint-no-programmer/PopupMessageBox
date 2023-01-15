@@ -1,10 +1,10 @@
-#include "popup.h"
+#include "popupwindow.h"
 #include <QPainter>
 #include <QApplication>
 #include <QDesktopWidget>
 #include <QDebug>
 
-PopUp::PopUp(QWidget *parent) : QWidget(parent)
+PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint |        // Disable window decoration
                    Qt::Tool |                       // Discard display in a separate window
@@ -15,7 +15,7 @@ PopUp::PopUp(QWidget *parent) : QWidget(parent)
     animation.setTargetObject(this);                // Set the target animation
     animation.setPropertyName("popupOpacity");
 
-    connect(&animation, &QAbstractAnimation::finished, this, &PopUp::hide);
+    connect(&animation, &QAbstractAnimation::finished, this, &PopupWindow::hide);
 
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     label.setStyleSheet("QLabel { color : white; "
@@ -29,10 +29,10 @@ PopUp::PopUp(QWidget *parent) : QWidget(parent)
 
     timer = new QTimer();
 //    connect(timer, &QTimer::timeout, this, &PopUp::hideAnimation);
-    connect(timer, &QTimer::timeout, this, &PopUp::deleteLater);
+    connect(timer, &QTimer::timeout, this, &PopupWindow::deleteLater);
 }
 
-void PopUp::paintEvent(QPaintEvent *event)
+void PopupWindow::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
@@ -51,13 +51,13 @@ void PopUp::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(roundedRect, 10, 10);
 }
 
-void PopUp::setPopupText(const QString &text)
+void PopupWindow::setPopupText(const QString &text)
 {
     label.setText(text);    // Set the text in the Label
     adjustSize();           // With the recalculation notice sizes
 }
 
-void PopUp::show()
+void PopupWindow::show()
 {
     setWindowOpacity(0.0);  // Set the transparency to zero
 
@@ -75,7 +75,7 @@ void PopUp::show()
     timer->start(10000);
 }
 
-void PopUp::moveUp(const int x)
+void PopupWindow::moveUp(const int x)
 {
     const auto movementAnimation = new QPropertyAnimation(this, "pos");
     movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
@@ -89,7 +89,7 @@ void PopUp::moveUp(const int x)
 //    m_animation_moveup.start();
 }
 
-void PopUp::hideAnimation()
+void PopupWindow::hideAnimation()
 {
     timer->stop();
     animation.setDuration(1000);
@@ -98,7 +98,7 @@ void PopUp::hideAnimation()
     animation.start();
 }
 
-void PopUp::hide()
+void PopupWindow::hide()
 {
     // If the widget is transparent, then hide it
     if(getPopupOpacity() == 0.0){
@@ -106,14 +106,14 @@ void PopUp::hide()
     }
 }
 
-void PopUp::setPopupOpacity(float opacity)
+void PopupWindow::setPopupOpacity(float opacity)
 {
     popupOpacity = opacity;
 
     setWindowOpacity(opacity);
 }
 
-float PopUp::getPopupOpacity() const
+float PopupWindow::getPopupOpacity() const
 {
     return popupOpacity;
 }
