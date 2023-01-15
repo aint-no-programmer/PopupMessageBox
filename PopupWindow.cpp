@@ -21,8 +21,6 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
     animation.setTargetObject(this);                // Set the target animation
     animation.setPropertyName("popupOpacity");
 
-    connect(&animation, &QAbstractAnimation::finished, this, &PopupWindow::hide);
-
     label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     label.setStyleSheet("QLabel { color : white; "
                         "margin-top: 6px;"
@@ -34,8 +32,7 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
     setLayout(&layout);
 
     timer = new QTimer();
-//    connect(timer, &QTimer::timeout, this, &PopUp::hideAnimation);
-    connect(timer, &QTimer::timeout, this, &PopupWindow::deleteLater);
+    connect(timer, &QTimer::timeout, this, &PopupWindow::hideAnimation);
 }
 
 void PopupWindow::paintEvent(QPaintEvent *event)
@@ -96,14 +93,8 @@ void PopupWindow::hideAnimation()
     animation.setStartValue(1.0);
     animation.setEndValue(0.0);
     animation.start();
-}
 
-void PopupWindow::hide()
-{
-    // If the widget is transparent, then hide it
-    if(getPopupOpacity() == 0.0){
-        QWidget::hide();
-    }
+    connect(&animation, &QPropertyAnimation::finished, this, &QWidget::deleteLater);
 }
 
 void PopupWindow::setPopupOpacity(float opacity)

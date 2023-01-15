@@ -18,10 +18,7 @@ class PopupWindow : public QWidget
  
 public:
     explicit PopupWindow(QWidget *parent = 0);
-    ~PopupWindow() override
-    {
-        hideAnimation();
-    }
+    ~PopupWindow() override = default;
 protected:
     void paintEvent(QPaintEvent *event);    // The background will be drawn through the redraw method
  
@@ -33,9 +30,6 @@ public slots:
     void moveUp(const int x);
 private slots:
     void hideAnimation();                   // Slot start the animation hide
-    void hide();                            /* At the end of the animation, it is checked in a given slot,
-                                             * Does the widget visible, or to hide
-                                             * */
  
 private:
     QLabel label;           
