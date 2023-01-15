@@ -13,13 +13,7 @@ PopUp::PopUp(QWidget *parent) : QWidget(parent)
     setAttribute(Qt::WA_ShowWithoutActivating);     // At the show, the widget does not get the focus automatically
 
     animation.setTargetObject(this);                // Set the target animation
-    animation.setPropertyName("popupOpacity");      //
-
-    /*add auxiliary animation >>>>>>>>>>>>>>>>*/
-    m_animation_moveup.setTargetObject(this);
-    m_animation_moveup.setPropertyName("popupMoveup");
-    connect(this, &PopUp::s_moved, this, &PopUp::onMoved);
-    /*<<<<<<<<<<<<<<<<<<<<<<< add auxiliary animation*/
+    animation.setPropertyName("popupOpacity");
 
     connect(&animation, &QAbstractAnimation::finished, this, &PopUp::hide);
 
@@ -88,13 +82,11 @@ void PopUp::moveUp(const int x)
     movementAnimation->setEasingCurve(QEasingCurve::OutElastic);
     movementAnimation->start();
 
-
 //    m_animation_moveup.setStartValue(pos().y());
 //    m_animation_moveup.setEndValue(pos().y() - x);
 //    m_animation_moveup.setDuration(1000);
 //    m_animation_moveup.setEasingCurve(QEasingCurve::InOutQuad);
 //    m_animation_moveup.start();
-
 }
 
 void PopUp::hideAnimation()
