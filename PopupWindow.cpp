@@ -4,12 +4,6 @@
 #include <QScreen>
 #include <QDebug>
 
-
-
-
-#include <QDesktopWidget>
-#include <QThread>
-
 PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint |        // Disable window decoration
@@ -20,6 +14,8 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
 
     m_animation.setTargetObject(this);                // Set the target animation
     m_animation.setPropertyName("popupOpacity");
+    m_movementAnimation.setTargetObject(this);
+    m_movementAnimation.setPropertyName("pos");
 
     m_label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_label.setStyleSheet("QLabel { color : white; "
@@ -80,10 +76,9 @@ void PopupWindow::show()
 
 void PopupWindow::moveUp(const int x)
 {
-    const auto movementAnimation = new QPropertyAnimation(this, "pos");
-    movementAnimation->setEndValue(QPoint(pos().x(), pos().y() - x));
-    movementAnimation->setEasingCurve(QEasingCurve::OutElastic);
-    movementAnimation->start();
+    m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
+    m_movementAnimation.setEasingCurve(QEasingCurve::OutElastic);
+    m_movementAnimation.start();
 }
 
 void PopupWindow::hideAnimation()

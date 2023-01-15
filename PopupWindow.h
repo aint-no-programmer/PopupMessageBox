@@ -35,6 +35,7 @@ private:
     QLabel m_label;
     QGridLayout m_layout;
     QPropertyAnimation m_animation;
+    QPropertyAnimation m_movementAnimation;
     float m_popupOpacity;
     int m_popupMoveup;
     QTimer *m_timer;
