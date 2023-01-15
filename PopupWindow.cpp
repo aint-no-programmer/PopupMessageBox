@@ -96,7 +96,6 @@ void PopupWindow::hideAnimation()
     animation.setStartValue(1.0);
     animation.setEndValue(0.0);
     animation.start();
-    QThread::currentThread()->sleep(1);
 }
 
 void PopupWindow::hide()
