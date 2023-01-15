@@ -34,7 +34,7 @@ private slots:
 private:
     QLabel m_message, m_title;
     QGridLayout m_layout;
-    QPropertyAnimation m_animation;
+    QPropertyAnimation m_opacityAnimation;
     QPropertyAnimation m_movementAnimation;
     float m_popupOpacity;
     int m_popupMoveup;
