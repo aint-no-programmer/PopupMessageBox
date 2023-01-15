@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "popupwindow.h"
+#include "PopupWindow.h"
 #include <QVector>
 
 

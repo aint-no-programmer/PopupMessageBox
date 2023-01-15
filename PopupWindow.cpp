@@ -1,4 +1,4 @@
-#include "popupwindow.h"
+#include "PopupWindow.h"
 #include <QPainter>
 #include <QApplication>
 #include <QDesktopWidget>

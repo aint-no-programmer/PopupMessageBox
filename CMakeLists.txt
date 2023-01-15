@@ -16,11 +16,11 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 add_executable(popup_messagebox
     main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    popupwindow.cpp
-    popupwindow.h
-    mainwindow.ui
+    MainWindow.cpp
+    MainWindow.h
+    PopupWindow.cpp
+    PopupWindow.h
+    MainWindow.ui
 )
 
 target_link_libraries(popup_messagebox PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
