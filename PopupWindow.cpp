@@ -18,21 +18,21 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
     setAttribute(Qt::WA_TranslucentBackground);     // Indicates that the background will be transparent
     setAttribute(Qt::WA_ShowWithoutActivating);     // At the show, the widget does not get the focus automatically
 
-    animation.setTargetObject(this);                // Set the target animation
-    animation.setPropertyName("popupOpacity");
+    m_animation.setTargetObject(this);                // Set the target animation
+    m_animation.setPropertyName("popupOpacity");
 
-    label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    label.setStyleSheet("QLabel { color : white; "
+    m_label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_label.setStyleSheet("QLabel { color : white; "
                         "margin-top: 6px;"
                         "margin-bottom: 6px;"
                         "margin-left: 10px;"
                         "margin-right: 10px; }");
 
-    layout.addWidget(&label, 0, 0);
-    setLayout(&layout);
+    m_layout.addWidget(&m_label, 0, 0);
+    setLayout(&m_layout);
 
-    timer = new QTimer();
-    connect(timer, &QTimer::timeout, this, &PopupWindow::hideAnimation);
+    m_timer = new QTimer(this);
+    connect(m_timer, &QTimer::timeout, this, &PopupWindow::hideAnimation);
 }
 
 void PopupWindow::paintEvent(QPaintEvent *event)
@@ -56,7 +56,7 @@ void PopupWindow::paintEvent(QPaintEvent *event)
 
 void PopupWindow::setPopupText(const QString &text)
 {
-    label.setText(text);    // Set the text in the Label
+    m_label.setText(text);    // Set the text in the Label
     adjustSize();           // With the recalculation notice sizes
 }
 
@@ -64,9 +64,9 @@ void PopupWindow::show()
 {
     setWindowOpacity(0.0);  // Set the transparency to zero
 
-    animation.setDuration(1000);     // Configuring the duration of the animation
-    animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
-    animation.setEndValue(1.0);     // End - completely opaque widget
+    m_animation.setDuration(1000);     // Configuring the duration of the animation
+    m_animation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
+    m_animation.setEndValue(1.0);     // End - completely opaque widget
 
     setGeometry(QApplication::primaryScreen()->availableGeometry().width() - width(),
                 QApplication::primaryScreen()->availableGeometry().height() - height(),
@@ -74,8 +74,8 @@ void PopupWindow::show()
                 height());
     QWidget::show();
 
-    animation.start();
-    timer->start(10000);
+    m_animation.start();
+    m_timer->start(10000);
 }
 
 void PopupWindow::moveUp(const int x)
@@ -88,23 +88,23 @@ void PopupWindow::moveUp(const int x)
 
 void PopupWindow::hideAnimation()
 {
-    timer->stop();
-    animation.setDuration(1000);
-    animation.setStartValue(1.0);
-    animation.setEndValue(0.0);
-    animation.start();
+    m_timer->stop();
+    m_animation.setDuration(1000);
+    m_animation.setStartValue(1.0);
+    m_animation.setEndValue(0.0);
+    m_animation.start();
 
-    connect(&animation, &QPropertyAnimation::finished, this, &QWidget::deleteLater);
+    connect(&m_animation, &QPropertyAnimation::finished, this, &QWidget::deleteLater);
 }
 
 void PopupWindow::setPopupOpacity(float opacity)
 {
-    popupOpacity = opacity;
+    m_popupOpacity = opacity;
 
     setWindowOpacity(opacity);
 }
 
 float PopupWindow::getPopupOpacity() const
 {
-    return popupOpacity;
+    return m_popupOpacity;
 }

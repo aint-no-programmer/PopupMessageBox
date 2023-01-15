@@ -32,12 +32,12 @@ private slots:
     void hideAnimation();                   // Slot start the animation hide
  
 private:
-    QLabel label;           
-    QGridLayout layout;     
-    QPropertyAnimation animation;
-    float popupOpacity;     
+    QLabel m_label;
+    QGridLayout m_layout;
+    QPropertyAnimation m_animation;
+    float m_popupOpacity;
     int m_popupMoveup;
-    QTimer *timer;          
+    QTimer *m_timer;
 };
  
 #endif // POPUP_H
