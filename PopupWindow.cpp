@@ -17,14 +17,23 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
     m_movementAnimation.setTargetObject(this);
     m_movementAnimation.setPropertyName("pos");
 
-    m_label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    m_label.setStyleSheet("QLabel { color : white; "
+    m_layout.addWidget(&m_title, 0, 0);
+    //m_title.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_title.setStyleSheet("QLabel { color : white; "
+                        "font-weight: bold;"
+                        "font-size: 10pt;"
                         "margin-top: 6px;"
                         "margin-bottom: 6px;"
                         "margin-left: 10px;"
                         "margin-right: 10px; }");
 
-    m_layout.addWidget(&m_label, 0, 0);
+//    m_label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+    m_message.setStyleSheet("QLabel { color : white; "
+                        "margin-top: 6px;"
+                        "margin-bottom: 6px;"
+                        "margin-left: 10px;"
+                        "margin-right: 10px; }");
+    m_layout.addWidget(&m_message, 1, 0);
     setLayout(&m_layout);
 
     m_timer = new QTimer(this);
@@ -50,9 +59,10 @@ void PopupWindow::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(roundedRect, 10, 10);
 }
 
-void PopupWindow::setPopupText(const QString &text)
+void PopupWindow::setText(const QString &t_title, const QString &t_message)
 {
-    m_label.setText(text);    // Set the text in the Label
+    m_title.setText(t_title);
+    m_message.setText(t_message);    // Set the text in the Label
     adjustSize();           // With the recalculation notice sizes
 }
 

@@ -23,7 +23,7 @@ protected:
     void paintEvent(QPaintEvent *event);    // The background will be drawn through the redraw method
  
 public slots:
-    void setPopupText(const QString& text); // Setting text notification
+    void setText(const QString &t_title, const QString &t_message); // Setting text notification
     void show();                            /* own widget displaying method 
                                              * It is necessary to pre-animation settings
                                              * */
@@ -32,7 +32,7 @@ private slots:
     void hideAnimation();                   // Slot start the animation hide
  
 private:
-    QLabel m_label;
+    QLabel m_message, m_title;
     QGridLayout m_layout;
     QPropertyAnimation m_animation;
     QPropertyAnimation m_movementAnimation;

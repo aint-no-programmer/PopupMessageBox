@@ -17,7 +17,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     const auto popUp = new PopupWindow();
-    popUp->setPopupText(ui->textEdit->toPlainText());
+    popUp->setText(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText());
 
     //aintnop.todo add removing deleted <popup> elements from QVector
     for (const auto e : m_popups)
