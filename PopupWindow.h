@@ -17,8 +17,10 @@ class PopupWindow : public QWidget
     float getPopupOpacity() const;
  
 public:
-    explicit PopupWindow(QWidget *parent = 0);
+    explicit PopupWindow(QWidget *parent = nullptr);
     ~PopupWindow() override = default;
+signals:
+    void s_movedUp();                       // Signals when moving up is finished
 protected:
     void paintEvent(QPaintEvent *event);    // The background will be drawn through the redraw method
  

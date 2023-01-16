@@ -16,6 +16,7 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
     m_opacityAnimation.setPropertyName("popupOpacity");
     m_movementAnimation.setTargetObject(this);
     m_movementAnimation.setPropertyName("pos");
+    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, &PopupWindow::s_movedUp);
 
     m_layout.addWidget(&m_title, 0, 0);
     //m_title.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
