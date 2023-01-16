@@ -107,7 +107,7 @@ void PopupWindow::show()
     m_timer->start(10000);
 }
 
-void PopupWindow::moveUp(const int x)
+void PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
     m_movementAnimation.setEasingCurve(QEasingCurve::OutElastic);

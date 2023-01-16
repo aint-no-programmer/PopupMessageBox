@@ -27,7 +27,7 @@ public slots:
     void show();                            /* own widget displaying method 
                                              * It is necessary to pre-animation settings
                                              * */
-    void moveUp(const int x);
+    void moveUp(int x);
 private slots:
     void hideAnimation();                   // Slot start the animation hide
  
