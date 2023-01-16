@@ -1,0 +1,74 @@
+#pragma once
+ 
+#include <QObject>
+
+#include "PopupWindow.h"
+
+class PopupWindowContainer : public QObject
+{
+    Q_OBJECT
+
+	QVector<QSharedPointer<PopupWindow>> m_popupWindows;
+public:
+    enum class MessageType
+    {
+	    Info = 0,
+        Warning,
+        Error,
+        None = 255
+    };
+
+    explicit PopupWindowContainer(QObject* parent = nullptr);
+    ~PopupWindowContainer() override = default;
+
+    bool pushMessage(
+        const QString& t_title,
+        const QString& t_message,
+        const QColor& t_color = QColor(0, 0, 0, 180))
+    {
+        if (!t_color.isValid())
+        {
+			//aln.todo error handling here
+            return false;
+        }
+
+        QSharedPointer<PopupWindow> popupWindow(new PopupWindow);
+        popupWindow->createMessage(t_title, t_message, t_color);
+
+        for (const auto& e : m_popupWindows)
+        {
+            e->moveUp(popupWindow->height());
+        }
+
+        popupWindow->show();
+        m_popupWindows.push_front(popupWindow);
+        connect(popupWindow.get(), &PopupWindow::destroyed, [this, popupWindow]() {
+            m_popupWindows.removeOne(popupWindow);
+        });
+
+        return true;
+    }
+
+    bool pushMessage(
+        const QString& t_title,
+        const QString& t_message,
+        MessageType t_messageType = MessageType::Info)
+    {
+        return pushMessage(t_title, t_message, convert(t_messageType));
+    }
+    static QColor convert(MessageType t_messageType)
+    {
+	    switch(t_messageType)
+	    {
+        case MessageType::Info:     return QColor(0, 0, 0, 180);
+        case MessageType::Warning:  return QColor(Qt::darkYellow);
+        case MessageType::Error:    return QColor(Qt::darkRed);
+        case MessageType::None:     //to default
+        default:
+	        {
+		        //error case
+				return {};  //invalid QColor
+	        }
+	    }
+    }
+};
