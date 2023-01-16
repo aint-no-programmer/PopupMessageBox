@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "PopupWindow.h"
+#include "PopupWindowContainer.h"
 #include <QVector>
 
 
@@ -14,18 +14,15 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
+	PopupWindowContainer m_popupWindowContainer;
 public:
     MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() override;
 
 private slots:
     void on_pushButton_clicked();
-
 private:
     QColor m_color{0,0,0,180};
     Ui::MainWindow *ui;
-    QVector<PopupWindow*> m_popups;
-//    PopUp *popUp;
 };
 #endif // MAINWINDOW_H

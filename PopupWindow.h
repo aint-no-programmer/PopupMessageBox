@@ -1,6 +1,5 @@
-#ifndef POPUP_H
-#define POPUP_H
- 
+#pragma once
+
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
@@ -43,5 +42,3 @@ private:
     int m_popupMoveup;
     QTimer *m_timer;
 };
- 
-#endif // POPUP_H

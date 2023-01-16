@@ -7,8 +7,7 @@
 class PopupWindowContainer : public QObject
 {
     Q_OBJECT
-
-	QVector<QSharedPointer<PopupWindow>> m_popupWindows;
+	QVector<PopupWindow*> m_popupWindows;
 public:
     enum class MessageType
     {
@@ -18,8 +17,18 @@ public:
         None = 255
     };
 
-    explicit PopupWindowContainer(QObject* parent = nullptr);
-    ~PopupWindowContainer() override = default;
+    explicit PopupWindowContainer(QObject* parent = nullptr) : QObject(parent)
+    {
+	    
+    }
+
+    ~PopupWindowContainer() override
+    {
+		for (const auto& e : m_popupWindows)
+		{
+            e->deleteLater();
+		}
+    }
 
     bool pushMessage(
         const QString& t_title,
@@ -32,7 +41,7 @@ public:
             return false;
         }
 
-        QSharedPointer<PopupWindow> popupWindow(new PopupWindow);
+        auto popupWindow = new PopupWindow;
         popupWindow->createMessage(t_title, t_message, t_color);
 
         for (const auto& e : m_popupWindows)
@@ -41,8 +50,9 @@ public:
         }
 
         popupWindow->show();
+
         m_popupWindows.push_front(popupWindow);
-        connect(popupWindow.get(), &PopupWindow::destroyed, [this, popupWindow]() {
+        connect(popupWindow, &PopupWindow::destroyed, [this, popupWindow]() {
             m_popupWindows.removeOne(popupWindow);
         });
 

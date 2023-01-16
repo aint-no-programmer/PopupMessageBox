@@ -20,6 +20,8 @@ add_executable(${PROJECT_NAME}
     MainWindow.h
     PopupWindow.cpp
     PopupWindow.h
+    PopupWindowContainer.cpp
+    PopupWindowContainer.h
     MainWindow.ui
 )
 

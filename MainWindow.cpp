@@ -28,18 +28,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    const auto popUp = new PopupWindow();
-    popUp->createMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), m_color);
-
-    //aintnop.todo add removing deleted <popup> elements from QVector
-    for (const auto e : m_popups)
-    {
-        e->moveUp(popUp->height());
-    }
-
-    popUp->show();
-    m_popups.push_front(popUp);
-    connect(popUp, &PopupWindow::destroyed, [this, popUp](){
-        m_popups.removeOne(popUp);
-    });
+    m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), m_color);
 }
