@@ -18,6 +18,22 @@ MainWindow::MainWindow(QWidget *parent)
         m_color = QColorDialog::getColor(m_color);
         setButtonColor(m_color);
     });
+
+    /*buttons*/
+    //info
+    connect(ui->infoButton, &QPushButton::clicked, this, [this](){
+        m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), PopupWindowContainer::MessageType::Info);
+    });
+
+    //warning
+    connect(ui->warnButton, &QPushButton::clicked, this, [this](){
+        m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), PopupWindowContainer::MessageType::Warning);
+    });
+
+    //error
+    connect(ui->errorButton, &QPushButton::clicked, this, [this](){
+        m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), PopupWindowContainer::MessageType::Error);
+    });
 }
 
 
