@@ -4,7 +4,11 @@
 #include <QScreen>
 #include <QDebug>
 
-PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
+PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurve, int t_appearanceDuration, QWidget* parent)
+    : QWidget(parent),
+	m_displayDuration(t_displayDuration),
+	m_movingCurve(t_movingCurve),
+	m_appearanceDuration(t_appearanceDuration)
 {
     setWindowFlags(Qt::FramelessWindowHint |        // Disable window decoration
                    Qt::Tool |                       // Discard display in a separate window
@@ -16,6 +20,7 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
     m_opacityAnimation.setPropertyName("popupOpacity");
     m_movementAnimation.setTargetObject(this);
     m_movementAnimation.setPropertyName("pos");
+
     connect(&m_movementAnimation, &QPropertyAnimation::finished, this, &PopupWindow::s_movedUp);
 
     m_layout.addWidget(&m_title, 0, 0);
@@ -28,7 +33,6 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
                         "margin-left: 10px;"
                         "margin-right: 10px; }");
 
-//    m_label.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     m_message.setStyleSheet("QLabel { color : white; "
                         "margin-top: 6px;"
                         "margin-bottom: 6px;"
@@ -40,6 +44,36 @@ PopupWindow::PopupWindow(QWidget *parent) : QWidget(parent)
 
     m_timer = new QTimer(this);
     connect(m_timer, &QTimer::timeout, this, &PopupWindow::hideAnimation);
+}
+
+void PopupWindow::setDisplayDuration(int t_duration)
+{
+	m_displayDuration = t_duration;
+}
+
+int PopupWindow::displayDuration() const
+{
+	return m_displayDuration;
+}
+
+void PopupWindow::setMovingCurve(const QEasingCurve& t_curve)
+{
+	m_movingCurve = t_curve;
+}
+
+QEasingCurve PopupWindow::movingCurve() const
+{
+	return m_movingCurve;
+}
+
+void PopupWindow::setAppearanceDuration(int t_duration)
+{
+	m_appearanceDuration = t_duration;
+}
+
+int PopupWindow::appearanceDuration() const
+{
+	return m_appearanceDuration;
 }
 
 void PopupWindow::paintEvent(QPaintEvent *event)
@@ -63,30 +97,14 @@ void PopupWindow::paintEvent(QPaintEvent *event)
 
 void PopupWindow::createMessage(const QString &t_title, const QString &t_message, const QColor &t_color)
 {
-    auto wordWrapper = [](const QString& t_message, unsigned int t_line_length = 50){
-        QString output_msg;
-        unsigned int counter = 0;
-        for (const auto& it : t_message.split(" "))
-        {
-            counter += it.size();
-            output_msg.append(it).append(' ');
-            if (counter > t_line_length)
-            {
-                output_msg.append(" \n");
-                counter = 0;
-            }
-        }
-
-        return output_msg;
-    };
 
     if (m_color != t_color)
     {
         m_color = t_color;
     }
 
-    m_title.setText(wordWrapper(t_title, 30));
-    m_message.setText(wordWrapper(t_message));      // Set the text in the Label
+    m_title.setText(textSplitter(t_title, 30));
+    m_message.setText(textSplitter(t_message));      // Set the text in the Label
     adjustSize();                                   // With the recalculation notice sizes
 }
 
@@ -94,7 +112,7 @@ void PopupWindow::show()
 {
     setWindowOpacity(0.0);  // Set the transparency to zero
 
-    m_opacityAnimation.setDuration(1000);     // Configuring the duration of the animation
+    m_opacityAnimation.setDuration(m_appearanceDuration);     // Configuring the duration of the animation
     m_opacityAnimation.setStartValue(0.0);   // The start value is 0 (fully transparent widget)
     m_opacityAnimation.setEndValue(1.0);     // End - completely opaque widget
 
@@ -105,20 +123,20 @@ void PopupWindow::show()
     QWidget::show();
 
     m_opacityAnimation.start();
-    m_timer->start(10000);
+    m_timer->start(m_displayDuration);
 }
 
 void PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
-    m_movementAnimation.setEasingCurve(QEasingCurve::OutElastic);
+    m_movementAnimation.setEasingCurve(m_movingCurve);
     m_movementAnimation.start();
 }
 
 void PopupWindow::hideAnimation()
 {
     m_timer->stop();
-    m_opacityAnimation.setDuration(1000);
+    m_opacityAnimation.setDuration(m_appearanceDuration);
     m_opacityAnimation.setStartValue(1.0);
     m_opacityAnimation.setEndValue(0.0);
     m_opacityAnimation.start();
@@ -136,4 +154,22 @@ void PopupWindow::setPopupOpacity(float opacity)
 float PopupWindow::getPopupOpacity() const
 {
     return m_popupOpacity;
+}
+
+QString PopupWindow::textSplitter(const QString& t_message, unsigned t_line_length) const
+{
+	QString output_msg;
+	unsigned int counter = 0;
+	for (const auto& it : t_message.split(" "))
+	{
+		counter += it.size();
+		output_msg.append(it).append(' ');
+		if (counter > t_line_length)
+		{
+			output_msg.append(" \n");
+			counter = 0;
+		}
+	}
+
+	return output_msg;
 }

@@ -41,7 +41,7 @@ public:
             return false;
         }
 
-        auto popupWindow = new PopupWindow;
+        auto popupWindow = new PopupWindow(5000);
         popupWindow->createMessage(t_title, t_message, t_color);
 
         for (const auto& e : m_popupWindows)
@@ -70,9 +70,9 @@ public:
     {
 	    switch(t_messageType)
 	    {
-        case MessageType::Info:     return QColor(Qt::blue);//QColor(0, 0, 0, 180);
-        case MessageType::Warning:  return QColor(Qt::yellow);
-        case MessageType::Error:    return QColor(Qt::red);
+        case MessageType::Info:     return QColor(Qt::darkBlue);//QColor(0, 0, 0, 180);
+        case MessageType::Warning:  return QColor(Qt::darkYellow);
+        case MessageType::Error:    return QColor(Qt::darkRed);
         case MessageType::None:     //to default
         default:
 	        {

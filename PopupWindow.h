@@ -9,15 +9,33 @@
 class PopupWindow : public QWidget
 {
     Q_OBJECT
- 
+
     Q_PROPERTY(float popupOpacity READ getPopupOpacity WRITE setPopupOpacity)
- 
+
     void setPopupOpacity(float opacity);
     float getPopupOpacity() const;
- 
+	/*
+     * splits text by <t_line_length> characters per line
+     */
+    QString textSplitter(const QString& t_message, unsigned int t_line_length = 50) const;;
 public:
-    explicit PopupWindow(QWidget *parent = nullptr);
+    explicit PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurve = QEasingCurve::InOutSine, int t_appearanceDuration = 1000, QWidget *parent = nullptr);
     ~PopupWindow() override = default;
+    /*
+     * duration of message displaying
+     */
+    void setDisplayDuration(int t_duration);
+    int displayDuration() const;
+    /*
+     * type of animation moving 
+     */
+    void setMovingCurve(const QEasingCurve& t_curve);
+    QEasingCurve movingCurve() const;
+    /*
+     * duration of message appearance
+     */
+    void setAppearanceDuration(int t_duration);
+    int appearanceDuration() const;
 signals:
     void s_movedUp();                       // Signals when moving up is finished
 protected:
@@ -33,7 +51,11 @@ private slots:
     void hideAnimation();                   // Slot start the animation hide
  
 private:
-    QColor m_color{0,0,0,180};
+    int m_displayDuration;
+    QEasingCurve m_movingCurve;
+    int m_appearanceDuration;
+
+    QColor m_color;
     QLabel m_message, m_title;
     QGridLayout m_layout;
     QPropertyAnimation m_opacityAnimation;
