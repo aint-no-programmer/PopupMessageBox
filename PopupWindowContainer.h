@@ -59,8 +59,5 @@ public:
 
     static QColor convert(MessageType t_messageType);
 public slots:
-    void onMovedUp(PopupWindow* t_popupWindow)
-{
-	
-}
+    void onMovedUp(PopupWindow* t_popupWindow);
 };
