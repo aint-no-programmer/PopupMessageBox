@@ -21,7 +21,7 @@ PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurv
     m_movementAnimation.setTargetObject(this);
     m_movementAnimation.setPropertyName("pos");
 
-    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, &PopupWindow::s_movedUp);
+    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, [this]() {emit s_movedUp(this); });
 
     m_layout.addWidget(&m_title, 0, 0);
     //m_title.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);

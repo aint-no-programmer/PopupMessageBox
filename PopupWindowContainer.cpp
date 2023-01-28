@@ -57,6 +57,7 @@ bool PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_
 
 	auto popupWindow = new PopupWindow(m_displayDuration, m_movingCurve, m_appearanceDuration);
 	popupWindow->createMessage(t_title, t_message, t_color);
+	connect(popupWindow, &PopupWindow::s_movedUp, this, &PopupWindowContainer::onMovedUp, Qt::QueuedConnection);
 
 	for (const auto& e : m_popupWindows)
 	{
@@ -92,4 +93,9 @@ QColor PopupWindowContainer::convert(MessageType t_messageType)
 			return {};  //invalid QColor
 		}
 	}
+}
+
+void PopupWindowContainer::onMovedUp(PopupWindow* t_popupWindow)
+{
+	
 }

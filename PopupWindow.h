@@ -42,7 +42,7 @@ public:
     void setAppearanceDuration(int t_duration);
     int appearanceDuration() const;
 signals:
-    void s_movedUp();                       // Signals when moving up is finished
+    void s_movedUp(PopupWindow*);                       // Signals when moving up is finished
 protected:
     void paintEvent(QPaintEvent *event);    // The background will be drawn through the redraw method
  

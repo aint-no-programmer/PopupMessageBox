@@ -58,4 +58,9 @@ public:
         MessageType t_messageType = MessageType::Info);
 
     static QColor convert(MessageType t_messageType);
+public slots:
+    void onMovedUp(PopupWindow* t_popupWindow)
+{
+	
+}
 };
