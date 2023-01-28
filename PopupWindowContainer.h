@@ -8,6 +8,10 @@ class PopupWindowContainer : public QObject
 {
     Q_OBJECT
 	QVector<PopupWindow*> m_popupWindows;
+
+    int m_displayDuration;
+    QEasingCurve m_movingCurve;
+    int m_appearanceDuration;
 public:
     enum class MessageType
     {
@@ -17,7 +21,11 @@ public:
         None = 255
     };
 
-    explicit PopupWindowContainer(QObject* parent = nullptr) : QObject(parent)
+    explicit PopupWindowContainer(int t_displayDuration, const QEasingCurve& t_movingCurve = QEasingCurve::InOutSine, int t_appearanceDuration = 1000, QObject* parent = nullptr)
+		: QObject(parent),
+        m_displayDuration(t_displayDuration),
+        m_movingCurve(t_movingCurve),
+        m_appearanceDuration(t_appearanceDuration)
     {
 	    
     }
@@ -29,7 +37,39 @@ public:
             e->deleteLater();
 		}
     }
-
+    /*
+     * duration of message displaying
+     */
+    void setDisplayDuration(int t_duration)
+    {
+        m_displayDuration = t_duration;
+    }
+    int displayDuration() const
+    {
+        return m_displayDuration;
+    }
+    /*
+     * type of animation moving
+     */
+    void setMovingCurve(QEasingCurve t_curve)
+    {
+        m_movingCurve = t_curve;
+    }
+    QEasingCurve movingCurve() const
+    {
+        return m_movingCurve;
+    }
+    /*
+     * duration of message appearance
+     */
+    void setAppearanceDuration(int t_duration)
+    {
+        m_appearanceDuration = t_duration;
+    }
+    int appearanceDuration() const
+    {
+        return m_appearanceDuration;
+    }
     bool pushMessage(
         const QString& t_title,
         const QString& t_message,
@@ -41,7 +81,7 @@ public:
             return false;
         }
 
-        auto popupWindow = new PopupWindow(5000);
+        auto popupWindow = new PopupWindow(m_displayDuration, m_movingCurve, m_appearanceDuration);
         popupWindow->createMessage(t_title, t_message, t_color);
 
         for (const auto& e : m_popupWindows)

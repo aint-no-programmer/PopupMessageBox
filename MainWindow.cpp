@@ -4,7 +4,8 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    , ui(new Ui::MainWindow),
+	m_popupWindowContainer(10000)
 {
     ui->setupUi(this);
 
