@@ -19,7 +19,12 @@ class PopupWindow : public QWidget
      */
     QString textSplitter(const QString& t_message, unsigned int t_line_length = 50) const;;
 public:
-    explicit PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurve = QEasingCurve::InOutSine, int t_appearanceDuration = 1000, QWidget *parent = nullptr);
+    explicit PopupWindow(
+        int t_displayDuration, 
+        const QEasingCurve& t_movingCurve = QEasingCurve::InOutSine, 
+        int t_appearanceDuration = 1000, 
+        QWidget *parent = nullptr);
+
     ~PopupWindow() override = default;
     /*
      * duration of message displaying
@@ -54,7 +59,6 @@ private:
     int m_displayDuration;
     QEasingCurve m_movingCurve;
     int m_appearanceDuration;
-
     QColor m_color;
     QLabel m_message, m_title;
     QGridLayout m_layout;
