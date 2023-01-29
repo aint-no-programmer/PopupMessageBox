@@ -21,7 +21,14 @@ PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurv
     m_movementAnimation.setTargetObject(this);
     m_movementAnimation.setPropertyName("pos");
 
-    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, [this]() {emit s_movedUp(this); });
+    connect(&m_movementAnimation, &QPropertyAnimation::stateChanged, this, [this](QAbstractAnimation::State t_newState, QAbstractAnimation::State t_oldState)
+    {
+        if (t_newState == QAbstractAnimation::State::Running)
+        {
+            emit s_motionStarted(this);
+        }
+    });
+    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, [this]() {emit s_motionFinished(this); });
 
     m_layout.addWidget(&m_title, 0, 0);
     //m_title.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -130,7 +137,7 @@ void PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
     m_movementAnimation.setEasingCurve(m_movingCurve);
-    m_movementAnimation.start();
+	m_movementAnimation.start();
 }
 
 void PopupWindow::hideAnimation()
