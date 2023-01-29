@@ -137,6 +137,7 @@ void PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
     m_movementAnimation.setEasingCurve(m_movingCurve);
+    //m_movementAnimation.setDuration(5000);
 	m_movementAnimation.start();
 }
 

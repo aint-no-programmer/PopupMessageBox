@@ -14,7 +14,7 @@ void MotionWatchdog::keepTrack(PopupWindow* t_popupWindow)
 	connect(t_popupWindow, &PopupWindow::s_motionFinished, this, &MotionWatchdog::onMotionFinished, Qt::QueuedConnection);
 	connect(t_popupWindow, &PopupWindow::destroyed, this, [this](QObject* t_destroyed)
 	{
-		const auto casted = qobject_cast<PopupWindow*>(t_destroyed);
+		const auto casted = static_cast<PopupWindow*>(t_destroyed);//temporary kludge with this nasty static_cast
 		if (casted) 
 		{
 			onMotionFinished(casted);

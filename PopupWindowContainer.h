@@ -3,11 +3,13 @@
 #include <QObject>
 
 #include "PopupWindow.h"
+#include "MotionWatchdog.h"
 
 class PopupWindowContainer : public QObject
 {
     Q_OBJECT
 	QVector<PopupWindow*> m_popupWindows;
+    MotionWatchdog m_motionWatchDog;
 
     int m_displayDuration;
     QEasingCurve m_movingCurve;

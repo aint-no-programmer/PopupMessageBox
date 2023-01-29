@@ -3,6 +3,7 @@
 
 PopupWindowContainer::PopupWindowContainer(int t_displayDuration, const QEasingCurve& t_movingCurve,
 	int t_appearanceDuration, QObject* parent): QObject(parent),
+												m_motionWatchDog(this),
 	                                            m_displayDuration(t_displayDuration),
 	                                            m_movingCurve(t_movingCurve),
 	                                            m_appearanceDuration(t_appearanceDuration)
@@ -56,9 +57,14 @@ bool PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_
 		return false;
 	}
 
+	//create popup
 	auto popupWindow = new PopupWindow(m_displayDuration, m_movingCurve, m_appearanceDuration);
+	m_motionWatchDog.keepTrack(popupWindow);
+
+	//create message
 	popupWindow->createMessage(t_title, t_message, t_color);
 
+	//move existing messages
 	for (const auto& e : m_popupWindows)
 	{
 		e->moveUp(popupWindow->height());
