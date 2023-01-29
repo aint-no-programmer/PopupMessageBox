@@ -35,14 +35,14 @@ public:
 	
 	EventLoop& operator= (const EventLoop&) = delete;
 	EventLoop& operator= (EventLoop&&) noexcept = delete;
-	
-	void enqueue(callable_t&& callable) noexcept
+
+	void enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
 	{
-		{
-			std::lock_guard<std::mutex> guard(m_mutex);
-			m_writeBuffer.emplace_back(std::move(callable));
-		}
-		m_condVar.notify_one();
+		enqueue([this, t_title, t_message, t_color]()
+			{
+				m_popupWindowContainer->pushMessage(t_title, t_message, t_color);
+			}
+		);
 	}
 	
 private:
@@ -51,7 +51,16 @@ private:
 	std::condition_variable m_condVar;
 	bool m_running{ true };
 	std::thread m_thread{ &EventLoop::threadFunc, this };
-	
+
+	void enqueue(callable_t&& callable) noexcept
+	{
+		{
+			std::lock_guard<std::mutex> guard(m_mutex);
+			m_writeBuffer.emplace_back(std::move(callable));
+		}
+		m_condVar.notify_one();
+	}
+
 	void threadFunc() noexcept
 	{
 		std::vector<callable_t> readBuffer;
