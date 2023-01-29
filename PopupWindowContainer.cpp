@@ -7,7 +7,7 @@ PopupWindowContainer::PopupWindowContainer(int t_displayDuration, const QEasingC
 	                                            m_movingCurve(t_movingCurve),
 	                                            m_appearanceDuration(t_appearanceDuration)
 {
-	    
+
 }
 
 PopupWindowContainer::~PopupWindowContainer()

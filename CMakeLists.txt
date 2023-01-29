@@ -22,6 +22,8 @@ add_executable(${PROJECT_NAME}
     PopupWindow.h
     PopupWindowContainer.cpp
     PopupWindowContainer.h
+    MotionWatchdog.h
+    MotionWatchdog.cpp
     MainWindow.ui
 )
 
