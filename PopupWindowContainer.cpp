@@ -4,6 +4,7 @@
 PopupWindowContainer::PopupWindowContainer(int t_displayDuration, const QEasingCurve& t_movingCurve,
 	int t_appearanceDuration, QObject* parent): QObject(parent),
 												m_motionWatchDog(this),
+												m_onMotion{false},
 	                                            m_displayDuration(t_displayDuration),
 	                                            m_movingCurve(t_movingCurve),
 	                                            m_appearanceDuration(t_appearanceDuration)
@@ -104,9 +105,11 @@ QColor PopupWindowContainer::convert(MessageType t_messageType)
 void PopupWindowContainer::onMotionFinished()
 {
 	qDebug() << "onMotionFinished";
+	m_onMotion = false;
 }
 
 void PopupWindowContainer::onMotionStarted()
 {
 	qDebug() << "onMotionStarted";
+	m_onMotion = true;
 }

@@ -10,6 +10,7 @@ class PopupWindowContainer : public QObject
     Q_OBJECT
 	QVector<PopupWindow*> m_popupWindows;
     MotionWatchdog m_motionWatchDog;
+    bool m_onMotion;
 
     int m_displayDuration;
     QEasingCurve m_movingCurve;
@@ -30,6 +31,10 @@ public:
         QObject* parent = nullptr);
 
     ~PopupWindowContainer() override;
+    bool isOnMotion() const 
+    {
+        return m_onMotion;
+    }
     /*
      * duration of message displaying
      */

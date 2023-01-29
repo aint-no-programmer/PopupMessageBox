@@ -6,12 +6,22 @@
 #include <thread>
 #include <vector>
 
+#include "PopupWindowContainer.h"
+
+/*
+ * This event loop based on another that was taken from https://habr.com/ru/post/665730/
+ */
+
 class EventLoop
 {
+	PopupWindowContainer* m_popupWindowContainer{nullptr};
 public:
 	using callable_t = std::function<void()>;
 	
-	EventLoop() = default;
+	EventLoop(PopupWindowContainer* t_popupWindowContainer) : m_popupWindowContainer(t_popupWindowContainer)
+	{
+		
+	}
 	EventLoop(const EventLoop&) = delete;
 	EventLoop(EventLoop&&) noexcept = delete;
 	~EventLoop() noexcept
