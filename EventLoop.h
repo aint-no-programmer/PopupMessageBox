@@ -28,17 +28,16 @@ public:
 	~EventLoop() noexcept override;
 
 	void enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color);
-signals:
-	void s_pushMessage(const QString& t_title, const QString& t_message, const QColor& t_color);
-private:
-	void enqueue(callable_t&& callable) noexcept;
-	void threadFunc() noexcept;
-
 	//deleted
 	EventLoop(const EventLoop&) = delete;
 	EventLoop(EventLoop&&) noexcept = delete;
 	EventLoop& operator= (const EventLoop&) = delete;
 	EventLoop& operator= (EventLoop&&) noexcept = delete;
+signals:
+	void s_pushMessage(const QString& t_title, const QString& t_message, const QColor& t_color);
+private:
+	void enqueue(callable_t&& callable) noexcept;
+	void threadFunc() noexcept;
 
 	//members
 	PopupWindowContainer* m_popupWindowContainer{nullptr};
