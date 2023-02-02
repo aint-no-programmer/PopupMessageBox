@@ -1,7 +1,7 @@
 #include "PopupWindowContainer.h"
 #include <QDebug>
 
-PopupWindowContainer::PopupWindowContainer(int t_displayDuration, const QEasingCurve& t_movingCurve,
+PopMsgBox::PopupWindowContainer::PopupWindowContainer(int t_displayDuration, const QEasingCurve& t_movingCurve,
 	int t_appearanceDuration, QObject* parent): QObject(parent),
 												m_motionWatchDog(this),
 												m_onMotion{false},
@@ -12,7 +12,7 @@ PopupWindowContainer::PopupWindowContainer(int t_displayDuration, const QEasingC
 
 }
 
-PopupWindowContainer::~PopupWindowContainer()
+PopMsgBox::PopupWindowContainer::~PopupWindowContainer()
 {
 	for (const auto& e : m_popupWindows)
 	{
@@ -20,37 +20,42 @@ PopupWindowContainer::~PopupWindowContainer()
 	}
 }
 
-void PopupWindowContainer::setDisplayDuration(int t_duration)
+bool PopMsgBox::PopupWindowContainer::isOnMotion() const
+{
+	return m_onMotion;
+}
+
+void PopMsgBox::PopupWindowContainer::setDisplayDuration(int t_duration)
 {
 	m_displayDuration = t_duration;
 }
 
-int PopupWindowContainer::displayDuration() const
+int PopMsgBox::PopupWindowContainer::displayDuration() const
 {
 	return m_displayDuration;
 }
 
-void PopupWindowContainer::setMovingCurve(const QEasingCurve& t_curve)
+void PopMsgBox::PopupWindowContainer::setMovingCurve(const QEasingCurve& t_curve)
 {
 	m_movingCurve = t_curve;
 }
 
-QEasingCurve PopupWindowContainer::movingCurve() const
+QEasingCurve PopMsgBox::PopupWindowContainer::movingCurve() const
 {
 	return m_movingCurve;
 }
 
-void PopupWindowContainer::setAppearanceDuration(int t_duration)
+void PopMsgBox::PopupWindowContainer::setAppearanceDuration(int t_duration)
 {
 	m_appearanceDuration = t_duration;
 }
 
-int PopupWindowContainer::appearanceDuration() const
+int PopMsgBox::PopupWindowContainer::appearanceDuration() const
 {
 	return m_appearanceDuration;
 }
 
-bool PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
+bool PopMsgBox::PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
 {
 	if (!t_color.isValid())
 	{
@@ -80,12 +85,12 @@ bool PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_
 	return true;
 }
 
-bool PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_message, MessageType t_messageType)
+bool PopMsgBox::PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_message, MessageType t_messageType)
 {
 	return pushMessage(t_title, t_message, convert(t_messageType));
 }
 
-QColor PopupWindowContainer::convert(MessageType t_messageType)
+QColor PopMsgBox::PopupWindowContainer::convert(MessageType t_messageType)
 {
 	switch(t_messageType)
 	{
@@ -101,13 +106,13 @@ QColor PopupWindowContainer::convert(MessageType t_messageType)
 	}
 }
 
-void PopupWindowContainer::onMotionFinished()
+void PopMsgBox::PopupWindowContainer::onMotionFinished()
 {
 	m_onMotion = false;
 	emit s_onMotion(m_onMotion);
 }
 
-void PopupWindowContainer::onMotionStarted()
+void PopMsgBox::PopupWindowContainer::onMotionStarted()
 {
 	m_onMotion = true;
 	emit s_onMotion(m_onMotion);

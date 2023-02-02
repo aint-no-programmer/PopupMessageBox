@@ -6,13 +6,16 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 
+namespace PopMsgBox
+{
+
 class PopupWindow : public QWidget
 {
     Q_OBJECT
 
     Q_PROPERTY(float popupOpacity READ getPopupOpacity WRITE setPopupOpacity)
 
-    void setPopupOpacity(float opacity);
+    void setPopupOpacity(float t_opacity);
     float getPopupOpacity() const;
 	/*
      * splits text by <t_line_length> characters per line
@@ -69,3 +72,5 @@ private:
     int m_popupMoveup;
     QTimer *m_timer;
 };
+
+}

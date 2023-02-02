@@ -5,6 +5,9 @@
 #include "PopupWindow.h"
 #include "MotionWatchdog.h"
 
+namespace PopMsgBox
+{
+
 class PopupWindowContainer : public QObject
 {
     Q_OBJECT
@@ -74,3 +77,5 @@ public slots:
     void onMotionFinished();
     void onMotionStarted();
 };
+
+}

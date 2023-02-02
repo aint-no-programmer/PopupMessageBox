@@ -4,7 +4,7 @@
 #include <QScreen>
 #include <QDebug>
 
-PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurve, int t_appearanceDuration, QWidget* parent)
+PopMsgBox::PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurve, int t_appearanceDuration, QWidget* parent)
     : QWidget(parent),
 	m_displayDuration(t_displayDuration),
 	m_movingCurve(t_movingCurve),
@@ -53,37 +53,37 @@ PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movingCurv
     connect(m_timer, &QTimer::timeout, this, &PopupWindow::hideAnimation);
 }
 
-void PopupWindow::setDisplayDuration(int t_duration)
+void PopMsgBox::PopupWindow::setDisplayDuration(int t_duration)
 {
 	m_displayDuration = t_duration;
 }
 
-int PopupWindow::displayDuration() const
+int PopMsgBox::PopupWindow::displayDuration() const
 {
 	return m_displayDuration;
 }
 
-void PopupWindow::setMovingCurve(const QEasingCurve& t_curve)
+void PopMsgBox::PopupWindow::setMovingCurve(const QEasingCurve& t_curve)
 {
 	m_movingCurve = t_curve;
 }
 
-QEasingCurve PopupWindow::movingCurve() const
+QEasingCurve PopMsgBox::PopupWindow::movingCurve() const
 {
 	return m_movingCurve;
 }
 
-void PopupWindow::setAppearanceDuration(int t_duration)
+void PopMsgBox::PopupWindow::setAppearanceDuration(int t_duration)
 {
 	m_appearanceDuration = t_duration;
 }
 
-int PopupWindow::appearanceDuration() const
+int PopMsgBox::PopupWindow::appearanceDuration() const
 {
 	return m_appearanceDuration;
 }
 
-void PopupWindow::paintEvent(QPaintEvent *event)
+void PopMsgBox::PopupWindow::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
 
@@ -102,7 +102,7 @@ void PopupWindow::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(roundedRect, 10, 10);
 }
 
-void PopupWindow::createMessage(const QString &t_title, const QString &t_message, const QColor &t_color)
+void PopMsgBox::PopupWindow::createMessage(const QString &t_title, const QString &t_message, const QColor &t_color)
 {
 
     if (m_color != t_color)
@@ -115,7 +115,7 @@ void PopupWindow::createMessage(const QString &t_title, const QString &t_message
     adjustSize();                                   // With the recalculation notice sizes
 }
 
-void PopupWindow::show()
+void PopMsgBox::PopupWindow::show()
 {
     setWindowOpacity(0.0);  // Set the transparency to zero
 
@@ -133,7 +133,7 @@ void PopupWindow::show()
     m_timer->start(m_displayDuration);
 }
 
-void PopupWindow::moveUp(int x)
+void PopMsgBox::PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
     m_movementAnimation.setEasingCurve(m_movingCurve);
@@ -141,7 +141,7 @@ void PopupWindow::moveUp(int x)
 	m_movementAnimation.start();
 }
 
-void PopupWindow::hideAnimation()
+void PopMsgBox::PopupWindow::hideAnimation()
 {
     m_timer->stop();
     m_opacityAnimation.setDuration(m_appearanceDuration);
@@ -152,19 +152,19 @@ void PopupWindow::hideAnimation()
     connect(&m_opacityAnimation, &QPropertyAnimation::finished, this, &QWidget::deleteLater);
 }
 
-void PopupWindow::setPopupOpacity(float opacity)
+void PopMsgBox::PopupWindow::setPopupOpacity(float t_opacity)
 {
-    m_popupOpacity = opacity;
+    m_popupOpacity = t_opacity;
 
-    setWindowOpacity(opacity);
+    setWindowOpacity(t_opacity);
 }
 
-float PopupWindow::getPopupOpacity() const
+float PopMsgBox::PopupWindow::getPopupOpacity() const
 {
     return m_popupOpacity;
 }
 
-QString PopupWindow::textSplitter(const QString& t_message, unsigned t_line_length) const
+QString PopMsgBox::PopupWindow::textSplitter(const QString& t_message, unsigned t_line_length) const
 {
 	QString output_msg;
 	unsigned int counter = 0;

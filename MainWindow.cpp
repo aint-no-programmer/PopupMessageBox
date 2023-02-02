@@ -2,11 +2,13 @@
 #include "./ui_MainWindow.h"
 #include <QColorDialog>
 
-MainWindow::MainWindow(QWidget *parent)
+PopMsgBox::MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow),
 	m_popupWindowContainer(10000)
 {
+    m_eventLoop = new EventLoop(&m_popupWindowContainer, this);
+
     ui->setupUi(this);
 
     auto setButtonColor = [this](const QColor& t_color){
@@ -37,13 +39,15 @@ MainWindow::MainWindow(QWidget *parent)
     });
 }
 
-
-MainWindow::~MainWindow()
+PopMsgBox::MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void PopMsgBox::MainWindow::on_pushButton_clicked()
 {
-    m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), m_color);
+    //m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), m_color);
+    counter++;
+	//m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText() + " " + QString::number(counter), ui->textEdit->toPlainText(), m_color);
+    m_eventLoop->enqueueMessage(ui->textEdit_2->toPlainText() + " " + QString::number(counter), ui->textEdit->toPlainText(), m_color);
 }
