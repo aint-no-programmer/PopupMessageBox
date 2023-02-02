@@ -31,40 +31,45 @@ public:
         QObject* parent = nullptr);
 
     ~PopupWindowContainer() override;
-    bool isOnMotion() const 
-    {
-        return m_onMotion;
-    }
-    /*
+
+	/*
+     * are PopWindows on motion at the moment  
+     */
+    bool isOnMotion() const;
+
+	/*
      * duration of message displaying
      */
     void setDisplayDuration(int t_duration);
-
     int displayDuration() const;
-    /*
+
+	/*
      * type of animation moving
      */
     void setMovingCurve(const QEasingCurve& t_curve);
-
     QEasingCurve movingCurve() const;
+
     /*
      * duration of message appearance
      */
     void setAppearanceDuration(int t_duration);
-
     int appearanceDuration() const;
 
+    /*
+     * add another message 
+     */
     bool pushMessage(
         const QString& t_title,
         const QString& t_message,
         const QColor& t_color = QColor(0, 0, 0, 180));
-
     bool pushMessage(
         const QString& t_title,
         const QString& t_message,
         MessageType t_messageType = MessageType::Info);
 
     static QColor convert(MessageType t_messageType);
+signals:
+    void s_onMotion(bool);
 public slots:
     void onMotionFinished();
     void onMotionStarted();

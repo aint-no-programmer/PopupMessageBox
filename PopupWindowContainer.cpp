@@ -64,7 +64,6 @@ bool PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_
 
 	//create message
 	popupWindow->createMessage(t_title, t_message, t_color);
-
 	//move existing messages
 	for (const auto& e : m_popupWindows)
 	{
@@ -104,12 +103,12 @@ QColor PopupWindowContainer::convert(MessageType t_messageType)
 
 void PopupWindowContainer::onMotionFinished()
 {
-	qDebug() << "onMotionFinished";
 	m_onMotion = false;
+	emit s_onMotion(m_onMotion);
 }
 
 void PopupWindowContainer::onMotionStarted()
 {
-	qDebug() << "onMotionStarted";
 	m_onMotion = true;
+	emit s_onMotion(m_onMotion);
 }
