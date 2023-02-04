@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include <QPropertyAnimation>
 #include <QTimer>
+#include <QDebug>
 
 namespace PopMsgBox
 {
@@ -28,7 +29,10 @@ public:
         int t_appearanceDuration = 1000, 
         QWidget *parent = nullptr);
 
-    ~PopupWindow() override = default;
+    ~PopupWindow() override
+    {
+        qDebug() << "~PopupWindow()";
+    };
     /*
      * duration of message displaying
      */
@@ -45,8 +49,8 @@ public:
     void setAppearanceDuration(int t_duration);
     int appearanceDuration() const;
 signals:
-    void s_motionStarted(QObject*);                   //Signals when starts the motion
-    void s_motionFinished(QObject*);                  //Signals when the motion is finished
+    void s_motionStarted(PopupWindow*);                   //Signals when starts the motion
+    void s_motionFinished(PopupWindow*);                  //Signals when the motion is finished
 protected:
     void paintEvent(QPaintEvent *event);    // The background will be drawn through the redraw method
  

@@ -1,4 +1,5 @@
 #include "EventLoop.h"
+#include <QDebug>
 
 PopMsgBox::EventLoop::EventLoop(PopupWindowContainer* t_popupWindowContainer, QObject* t_parent):
 	QObject(t_parent),
@@ -9,6 +10,8 @@ PopMsgBox::EventLoop::EventLoop(PopupWindowContainer* t_popupWindowContainer, QO
 	{
 		QMutexLocker lock(&m_mutex_2);
 		m_onMotion = t_onMotion;
+		QString str = m_onMotion ? "true" : "false";
+		qDebug() << "PopupWindowContainer::s_onMotion -> " + str;
 		if (!m_onMotion) m_condVar_2.notify_one();
 	});
 	connect(this, &EventLoop::s_pushMessage, t_popupWindowContainer, [this, t_popupWindowContainer](const QString& t_title, const QString& t_message, const QColor& t_color)
@@ -28,6 +31,8 @@ PopMsgBox::EventLoop::~EventLoop() noexcept
 	});
 
 	m_stopFuture.waitForFinished();
+
+	qDebug() << "~EventLoop()";
 }
 
 void PopMsgBox::EventLoop::enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
@@ -71,11 +76,14 @@ void PopMsgBox::EventLoop::threadFunc() noexcept
 				QMutexLocker lock(&m_mutex_2);
 				if (m_onMotion)
 				{
+					qDebug() << "waiting...";
 					m_condVar_2.wait(lock.mutex());
 				}
 			}
 
+			qDebug() << "before func()";
 			func();
+			qDebug() << "after func()";
 		}
 			
 		readBuffer.clear();

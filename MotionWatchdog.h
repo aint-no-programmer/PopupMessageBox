@@ -11,16 +11,15 @@ class PopupWindow;
 class MotionWatchdog : public QObject
 {
     Q_OBJECT
-	QVector<QObject*> m_observables;
+	QVector<PopupWindow*> m_observables;
 public:
     MotionWatchdog(PopupWindowContainer* t_popupWindowContainer);
-    ~MotionWatchdog() override = default;
 
-	void keepTrack(PopupWindow* t_popupWindow) const ;
+	void keepTrack(PopupWindow* t_popupWindow);
 public slots:
     void clear();
-    void onMotionStarted(QObject* t_popupWindow);
-    void onMotionFinished(QObject* t_popupWindow);
+    void onMotionStarted(PopupWindow* t_popupWindow);
+    void onMotionFinished(PopupWindow* t_popupWindow);
 signals:
     void s_motionFinished();
     void s_motionStarted();

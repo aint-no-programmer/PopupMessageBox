@@ -6,6 +6,7 @@
 #include <QVector>
 
 #include "EventLoop.h"
+#include <QCloseEvent>
 
 
 QT_BEGIN_NAMESPACE
@@ -24,7 +25,12 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
-
+    void closeEvent(QCloseEvent* event) override
+    {
+        qDebug() << "closeEvent: 1. m_eventLoop";
+        m_eventLoop->deleteLater();
+        event->accept();
+    }
 private slots:
     void on_pushButton_clicked();
 private:

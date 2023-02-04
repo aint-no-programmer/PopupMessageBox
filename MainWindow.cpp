@@ -42,6 +42,8 @@ PopMsgBox::MainWindow::MainWindow(QWidget *parent)
 PopMsgBox::MainWindow::~MainWindow()
 {
     delete ui;
+    qDebug() << "~MainWindow: 2. m_popupWindowContainer";
+    m_popupWindowContainer.deleteLater();
 }
 
 void PopMsgBox::MainWindow::on_pushButton_clicked()

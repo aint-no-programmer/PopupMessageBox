@@ -28,7 +28,11 @@ PopMsgBox::PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t
             emit s_motionStarted(this);
         }
     });
-    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, [this]() {emit s_motionFinished(this); });
+    connect(&m_movementAnimation, &QPropertyAnimation::finished, this, [this]()
+    {
+    	qDebug() << "QPropertyAnimation::finished -> PopupWindow::s_motionFinished";
+	    emit s_motionFinished(this);
+    });
 
     m_layout.addWidget(&m_title, 0, 0);
     //m_title.setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
@@ -137,18 +141,20 @@ void PopMsgBox::PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
     m_movementAnimation.setEasingCurve(m_movingCurve);
-    //m_movementAnimation.setDuration(5000);
+    m_movementAnimation.setDuration(3000);
 	m_movementAnimation.start();
+    qDebug() << "-> m_movementAnimation.start()";
 }
 
 void PopMsgBox::PopupWindow::hideAnimation()
 {
+    qDebug() << "PopupWindow::hideAnimation()";
     m_timer->stop();
     m_opacityAnimation.setDuration(m_appearanceDuration);
     m_opacityAnimation.setStartValue(1.0);
     m_opacityAnimation.setEndValue(0.0);
     m_opacityAnimation.start();
-
+    
     connect(&m_opacityAnimation, &QPropertyAnimation::finished, this, &QWidget::deleteLater);
 }
 
