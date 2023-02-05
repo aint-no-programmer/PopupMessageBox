@@ -31,6 +31,7 @@ public:
 
     ~PopupWindow() override
     {
+        disconnect();
         qDebug() << "~PopupWindow()";
     };
     /*

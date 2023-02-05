@@ -19,7 +19,7 @@ namespace PopMsgBox
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-	PopupWindowContainer m_popupWindowContainer;
+	PopupWindowContainer* m_popupWindowContainer;
     EventLoop* m_eventLoop{nullptr};
     int counter{0};
 public:
@@ -29,7 +29,11 @@ public:
     {
         qDebug() << "closeEvent: 1. m_eventLoop";
         m_eventLoop->deleteLater();
-        event->accept();
+        connect(m_eventLoop, &EventLoop::destroyed, this, [this](QObject*)
+        {
+                this->deleteLater();
+        });
+        event->ignore();
     }
 private slots:
     void on_pushButton_clicked();
