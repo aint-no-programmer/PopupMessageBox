@@ -7,6 +7,7 @@
 
 #include "EventLoop.h"
 #include <QCloseEvent>
+#include <QApplication>
 
 
 QT_BEGIN_NAMESPACE
@@ -31,7 +32,8 @@ public:
         m_eventLoop->deleteLater();
         connect(m_eventLoop, &EventLoop::destroyed, this, [this](QObject*)
         {
-                this->deleteLater();
+                QApplication::quit();
+        	//event->accept();
         });
         event->ignore();
     }
