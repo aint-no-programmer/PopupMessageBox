@@ -16,6 +16,7 @@ PopMsgBox::PopupWindowContainer::~PopupWindowContainer()
 {
 	for (const auto& e : m_popupWindows)
 	{
+		e->disconnect();
 		e->deleteLater();
 	}
 
