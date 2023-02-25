@@ -31,7 +31,7 @@ class PopupWindow : public QWidget
 	/*
      * splits text by <t_line_length> characters per line
      */
-    QString textSplitter(const QString& t_message, unsigned int t_line_length = 50) const;;
+    QString textSplitter(const QString& t_message, unsigned int t_line_length = 50) const;
 public:
     explicit PopupWindow(
         int t_displayDuration, 
@@ -42,7 +42,7 @@ public:
     ~PopupWindow() override
     {
         PMB_TRACK("~PopupWindow()")
-    };
+    }
     /*
      * duration of message displaying
      */

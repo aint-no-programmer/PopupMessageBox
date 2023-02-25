@@ -18,6 +18,8 @@ add_executable(${PROJECT_NAME}
     main.cpp
     MainWindow.cpp
     MainWindow.h
+	PopMsgBox.cpp
+	PopMsgBox.h
     PopupWindow.cpp
     PopupWindow.h
     PopupWindowContainer.cpp

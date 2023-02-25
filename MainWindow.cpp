@@ -40,11 +40,11 @@ PopMsgBox::MainWindow::MainWindow(QWidget *parent)
 PopMsgBox::MainWindow::~MainWindow()
 {
     delete ui;
-    PMB_TRACK("~MainWindow()");
+    PMB_TRACK("~MainWindow()")
 }
 
 void PopMsgBox::MainWindow::on_pushButton_clicked()
 {
     m_counter++;
-    popMsgBox->enqueueMessage(ui->textEdit_2->toPlainText() + " " + QString::number(m_counter), ui->textEdit->toPlainText(), m_color);
+    PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText() + " " + QString::number(m_counter), ui->textEdit->toPlainText(), m_color);
 }
