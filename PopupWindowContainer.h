@@ -19,14 +19,6 @@ class PopupWindowContainer : public QObject
     QEasingCurve m_movingCurve;
     int m_appearanceDuration;
 public:
-    enum class MessageType
-    {
-	    Info = 0,
-        Warning,
-        Error,
-        None = 255
-    };
-
     explicit PopupWindowContainer(
         int t_displayDuration, 
         const QEasingCurve& t_movingCurve = QEasingCurve::InOutSine, 
@@ -65,12 +57,6 @@ public:
         const QString& t_title,
         const QString& t_message,
         const QColor& t_color = QColor(0, 0, 0, 180));
-    bool pushMessage(
-        const QString& t_title,
-        const QString& t_message,
-        MessageType t_messageType = MessageType::Info);
-
-    static QColor convert(MessageType t_messageType);
 signals:
     void s_onMotion(bool);
 public slots:

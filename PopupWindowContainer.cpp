@@ -94,27 +94,6 @@ bool PopMsgBox::PopupWindowContainer::pushMessage(const QString& t_title, const 
 	return true;
 }
 
-bool PopMsgBox::PopupWindowContainer::pushMessage(const QString& t_title, const QString& t_message, MessageType t_messageType)
-{
-	return pushMessage(t_title, t_message, convert(t_messageType));
-}
-
-QColor PopMsgBox::PopupWindowContainer::convert(MessageType t_messageType)
-{
-	switch(t_messageType)
-	{
-	case MessageType::Info:     return QColor(Qt::darkBlue);//QColor(0, 0, 0, 180);
-	case MessageType::Warning:  return QColor(Qt::darkYellow);
-	case MessageType::Error:    return QColor(Qt::darkRed);
-	case MessageType::None:     //to default
-	default:
-		{
-			//error case
-			return {};  //invalid QColor
-		}
-	}
-}
-
 void PopMsgBox::PopupWindowContainer::onMotionFinished()
 {
 	m_onMotion = false;

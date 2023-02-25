@@ -22,6 +22,13 @@ class MainWindow : public QMainWindow
     Q_OBJECT
     int m_counter{0};
     bool m_onClosing{ false };
+    enum class MessageType
+    {
+        Info = 0,
+        Warning,
+        Error,
+        None = 255
+    };
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
@@ -46,6 +53,22 @@ public:
 private slots:
     void on_pushButton_clicked();
 private:
+    QColor convert(MessageType t_messageType) const 
+    {
+        switch (t_messageType)
+        {
+        case MessageType::Info:     return QColor(Qt::darkBlue);//QColor(0, 0, 0, 180);
+        case MessageType::Warning:  return QColor(Qt::darkYellow);
+        case MessageType::Error:    return QColor(Qt::darkRed);
+        case MessageType::None:     //to default
+        default:
+        {
+            //error case
+            return {};  //invalid QColor
+        }
+        }
+    }
+
     QColor m_color{0,0,0,180};
     Ui::MainWindow *ui;
 };

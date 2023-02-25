@@ -22,18 +22,17 @@ PopMsgBox::MainWindow::MainWindow(QWidget *parent)
     /*buttons*/
     //info
     connect(ui->infoButton, &QPushButton::clicked, this, [this](){
-        //m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), PopupWindowContainer::MessageType::Info);
-        //m_eventLoop->deleteLater();
+        PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText().append(" %1").arg(m_counter++), ui->textEdit->toPlainText(), convert(MessageType::Info));
     });
 
     //warning
     connect(ui->warnButton, &QPushButton::clicked, this, [this](){
-        //m_popupWindowContainer.pushMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), PopupWindowContainer::MessageType::Warning);
+        PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText().append(" %1").arg(m_counter++), ui->textEdit->toPlainText(), convert(MessageType::Warning));
     });
 
     //error
     connect(ui->errorButton, &QPushButton::clicked, this, [this](){
-        //popMsgBox->enqueueMessage(ui->textEdit_2->toPlainText(), ui->textEdit->toPlainText(), PopupWindowContainer::MessageType::Error);
+        PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText().append(" %1").arg(m_counter++), ui->textEdit->toPlainText(), convert(MessageType::Error));
     });
 }
 
@@ -45,6 +44,5 @@ PopMsgBox::MainWindow::~MainWindow()
 
 void PopMsgBox::MainWindow::on_pushButton_clicked()
 {
-    m_counter++;
-    PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText() + " " + QString::number(m_counter), ui->textEdit->toPlainText(), m_color);
+    PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText().append(" %1").arg(m_counter++), ui->textEdit->toPlainText(), m_color);
 }
