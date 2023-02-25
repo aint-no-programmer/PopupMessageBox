@@ -36,10 +36,10 @@ void PopMsgBox::MotionWatchdog::onMotionStarted(PopupWindow* t_popupWindow)
 {
 	if (m_observables.empty())
 	{
-		qDebug() << "emit start.";
+		PMB_TRACK("emit start.")
 		emit s_motionStarted();
 	}
-	qDebug() << "m_observables on start: " << m_observables.size();
+	PMB_TRACK("m_observables on start: " << m_observables.size())
 	m_observables.push_back(t_popupWindow);
 }
 
@@ -55,10 +55,10 @@ void PopMsgBox::MotionWatchdog::onMotionFinished(PopupWindow* t_popupWindow)
 	}
 
 	m_observables.remove(pos);
-	qDebug() << "m_observables on finish: " << m_observables.size();
+	PMB_TRACK("m_observables on finish: " << m_observables.size())
 	if (m_observables.empty())
 	{
-		qDebug() << "emit finish.";
+		PMB_TRACK("emit finish.")
 		emit s_motionFinished();
 	}
 }

@@ -20,7 +20,7 @@ PopMsgBox::PopupWindowContainer::~PopupWindowContainer()
 		e->deleteLater();
 	}
 
-	qDebug() << "~PopupWindowContainer()";
+	PMB_TRACK("~PopupWindowContainer()")
 }
 
 bool PopMsgBox::PopupWindowContainer::isOnMotion() const
@@ -66,28 +66,28 @@ bool PopMsgBox::PopupWindowContainer::pushMessage(const QString& t_title, const 
 		return false;
 	}
 
-	qDebug() << "*	create popup";
+	PMB_TRACK("*	create popup")
 	//create popup
 	auto popupWindow = new PopupWindow(m_displayDuration, m_movingCurve, m_appearanceDuration);
 	m_motionWatchDog.keepTrack(popupWindow);
 
-	qDebug() << "*	create message";
+	PMB_TRACK("*	create message")
 	//create message
 	popupWindow->createMessage(t_title, t_message, t_color);
-	qDebug() << "*	move existing messages";
+	PMB_TRACK("*	move existing messages")
 	//move existing messages
 	for (const auto& e : m_popupWindows)
 	{
 		e->moveUp(popupWindow->height());
 	}
 
-	qDebug() << "*	popupWindow->show()";
+	PMB_TRACK("*	popupWindow->show()")
 	popupWindow->show();
 
-	qDebug() << "*	m_popupWindows.push_front(popupWindow);";
+	PMB_TRACK("*	m_popupWindows.push_front(popupWindow)")
 	m_popupWindows.push_front(popupWindow);
 	connect(popupWindow, &PopupWindow::destroyed, [this, popupWindow]() {
-		qDebug() << "*	m_popupWindows.removeOne(popupWindow)";
+		PMB_TRACK("*	m_popupWindows.removeOne(popupWindow)");
 		m_popupWindows.removeOne(popupWindow);
 	});
 

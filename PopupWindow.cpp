@@ -30,7 +30,7 @@ PopMsgBox::PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t
     });
     connect(&m_movementAnimation, &QPropertyAnimation::finished, this, [this]()
     {
-    	qDebug() << "QPropertyAnimation::finished -> PopupWindow::s_motionFinished";
+    	PMB_TRACK("QPropertyAnimation::finished -> PopupWindow::s_motionFinished")
 	    emit s_motionFinished(this);
     });
 
@@ -143,12 +143,12 @@ void PopMsgBox::PopupWindow::moveUp(int x)
     m_movementAnimation.setEasingCurve(m_movingCurve);
     m_movementAnimation.setDuration(3000);
 	m_movementAnimation.start();
-    qDebug() << "-> m_movementAnimation.start()";
+    PMB_TRACK("-> m_movementAnimation.start()")
 }
 
 void PopMsgBox::PopupWindow::hideAnimation()
 {
-    qDebug() << "PopupWindow::hideAnimation()";
+    PMB_TRACK("PopupWindow::hideAnimation()")
     m_timer->stop();
     m_opacityAnimation.setDuration(m_appearanceDuration);
     m_opacityAnimation.setStartValue(1.0);

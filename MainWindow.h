@@ -60,7 +60,7 @@ namespace PopMsgBox
         //private:
         ~PopMsgBox() override
         {
-            qDebug() << "~PopMsgBox";
+            PMB_TRACK("~PopMsgBox")
             if (m_eventLoop) m_eventLoop->deleteLater();
         }
     signals:
@@ -82,10 +82,11 @@ public:
         if (m_onClosing)
         {
             event->accept();
+            PMB_TRACK("MainWindow::close")
             return;
         }
 
-        qDebug() << "closeEvent: 1. m_eventLoop";
+        PMB_TRACK("popMsgBox->stop()")
         popMsgBox->stop();
         event->ignore();
         m_onClosing = true;

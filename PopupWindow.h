@@ -6,6 +6,16 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <QDebug>
+#include <iostream>
+
+#define POP_MSG_BOX
+
+#ifdef POP_MSG_BOX
+	#define PMB_TRACK(x) std::cout << x << std::endl;
+#else
+	#define  PMB_TRACK(x)
+#endif
+
 
 namespace PopMsgBox
 {
@@ -31,7 +41,7 @@ public:
 
     ~PopupWindow() override
     {
-        qDebug() << "~PopupWindow()";
+        PMB_TRACK("~PopupWindow()")
     };
     /*
      * duration of message displaying

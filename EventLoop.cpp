@@ -11,7 +11,7 @@ PopMsgBox::EventLoop::EventLoop(PopupWindowContainer* t_popupWindowContainer, QO
 		QMutexLocker lock(&m_mutex_2);
 		m_onMotion = t_onMotion;
 		QString str = m_onMotion ? "true" : "false";
-		qDebug() << "PopupWindowContainer::s_onMotion -> " + str;
+		PMB_TRACK("PopupWindowContainer::s_onMotion -> " + str.toStdString())
 		if (!m_onMotion) m_condVar_2.notify_one();
 	});
 	connect(this, &EventLoop::s_pushMessage, t_popupWindowContainer, [this, t_popupWindowContainer](const QString& t_title, const QString& t_message, const QColor& t_color)
@@ -32,7 +32,7 @@ PopMsgBox::EventLoop::~EventLoop() noexcept
 
 	m_stopFuture.waitForFinished();
 
-	qDebug() << "~EventLoop()";
+	PMB_TRACK("~EventLoop()")
 }
 
 void PopMsgBox::EventLoop::enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
@@ -76,14 +76,14 @@ void PopMsgBox::EventLoop::threadFunc() noexcept
 				QMutexLocker lock(&m_mutex_2);
 				if (m_onMotion)
 				{
-					qDebug() << "waiting...";
+					PMB_TRACK("waiting...")
 					m_condVar_2.wait(lock.mutex());
 				}
 			}
 
-			qDebug() << "before func()";
+			PMB_TRACK("before func()")
 			func();
-			qDebug() << "after func()";
+			PMB_TRACK("after func()")
 		}
 			
 		readBuffer.clear();
