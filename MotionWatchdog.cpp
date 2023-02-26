@@ -25,10 +25,10 @@ void PopMsgBox::MotionWatchdog::onMotionStarted(QObject* t_popupWindow)
 {
 	if (m_observables.empty())
 	{
-		PMB_TRACK("emit start.")
+		PMB_TRACE("emit start.")
 		emit s_motionStarted();
 	}
-	PMB_TRACK("m_observables on start: " << m_observables.size())
+	PMB_TRACE("m_observables on start: " << m_observables.size())
 	m_observables.push_back(t_popupWindow);
 }
 
@@ -39,15 +39,15 @@ void PopMsgBox::MotionWatchdog::onMotionFinished(QObject* t_popupWindow)
 
 	if (pos == -1)
 	{
-		//aln.todo handle this "No such pointer in <m_observables> container."
+		qWarning() << "No such pointer in <m_observables> container.";
 		return;
 	}
 
 	m_observables.remove(pos);
-	PMB_TRACK("m_observables on finish: " << m_observables.size())
+	PMB_TRACE("m_observables on finish: " << m_observables.size())
 	if (m_observables.empty())
 	{
-		PMB_TRACK("emit finish.")
+		PMB_TRACE("emit finish.")
 		emit s_motionFinished();
 	}
 }

@@ -8,12 +8,12 @@
 #include <QDebug>
 #include <iostream>
 
-#define POP_MSG_BOX
+//#define POP_MSG_BOX
 
 #ifdef POP_MSG_BOX
-	#define PMB_TRACK(x) std::cout << x << std::endl;
+	#define PMB_TRACE(x) std::cout << x << std::endl;
 #else
-	#define  PMB_TRACK(x)
+	#define  PMB_TRACE(x)
 #endif
 
 
@@ -41,7 +41,7 @@ public:
 
     ~PopupWindow() override
     {
-        PMB_TRACK("~PopupWindow()")
+        PMB_TRACE("~PopupWindow()")
     }
     /*
      * duration of message displaying

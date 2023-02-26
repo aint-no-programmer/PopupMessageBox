@@ -16,11 +16,14 @@ PopMsgBox::PopupWindowContainer::~PopupWindowContainer()
 {
 	for (const auto& e : m_popupWindows)
 	{
-		e->disconnect();
+		if (!e->disconnect())
+		{
+			qWarning() << "This signal isn't disconnected.";
+		}
 		e->deleteLater();
 	}
 
-	PMB_TRACK("~PopupWindowContainer()")
+	PMB_TRACE("~PopupWindowContainer()")
 }
 
 bool PopMsgBox::PopupWindowContainer::isOnMotion() const
@@ -62,32 +65,32 @@ bool PopMsgBox::PopupWindowContainer::pushMessage(const QString& t_title, const 
 {
 	if (!t_color.isValid())
 	{
-		//aln.todo error handling here
+		qWarning() << "Invalid color";
 		return false;
 	}
 
-	PMB_TRACK("*	create popup")
+	PMB_TRACE("*	create popup")
 	//create popup
 	auto popupWindow = new PopupWindow(m_displayDuration, m_movingCurve, m_appearanceDuration);
 	m_motionWatchDog.keepTrack(popupWindow);
 
-	PMB_TRACK("*	create message")
+	PMB_TRACE("*	create message")
 	//create message
 	popupWindow->createMessage(t_title, t_message, t_color);
-	PMB_TRACK("*	move existing messages")
+	PMB_TRACE("*	move existing messages")
 	//move existing messages
 	for (const auto& e : m_popupWindows)
 	{
 		e->moveUp(popupWindow->height());
 	}
 
-	PMB_TRACK("*	popupWindow->show()")
+	PMB_TRACE("*	popupWindow->show()")
 	popupWindow->show();
 
-	PMB_TRACK("*	m_popupWindows.push_front(popupWindow)")
+	PMB_TRACE("*	m_popupWindows.push_front(popupWindow)")
 	m_popupWindows.push_front(popupWindow);
 	connect(popupWindow, &PopupWindow::destroyed, [this, popupWindow]() {
-		PMB_TRACK("*	m_popupWindows.removeOne(popupWindow)");
+		PMB_TRACE("*	m_popupWindows.removeOne(popupWindow)");
 		m_popupWindows.removeOne(popupWindow);
 	});
 

@@ -39,7 +39,7 @@ PopMsgBox::MainWindow::MainWindow(QWidget *parent)
 PopMsgBox::MainWindow::~MainWindow()
 {
     delete ui;
-    PMB_TRACK("~MainWindow()")
+    PMB_TRACE("~MainWindow()")
 }
 
 void PopMsgBox::MainWindow::on_pushButton_clicked()

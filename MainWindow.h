@@ -37,11 +37,11 @@ public:
         if (m_onClosing)
         {
             event->accept();
-            PMB_TRACK("MainWindow::close")
+            PMB_TRACE("MainWindow::close")
             return;
         }
 
-        PMB_TRACK("popMsgBox->stop()")
+        PMB_TRACE("popMsgBox->stop()")
         PopMsgBox::instance().stop();
         event->ignore();
         m_onClosing = true;

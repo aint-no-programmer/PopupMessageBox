@@ -59,7 +59,7 @@ namespace PopMsgBox
         }
         ~PopMsgBox() override
         {
-            PMB_TRACK("~PopMsgBox")
+            PMB_TRACE("~PopMsgBox")
             if (m_eventLoop) m_eventLoop->deleteLater();
         }
     signals:
