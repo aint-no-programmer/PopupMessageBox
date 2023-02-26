@@ -1,0 +1,17 @@
+set(EXAMPLE_NAME ${PROJECT_NAME}_example)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+file(GLOB_RECURSE HDR_FILES ${INCLUDE_DIR}/*.h ${INCLUDE_DIR}/*.hpp)
+file(GLOB_RECURSE SRC_FILES ${SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE UI_FILES ${SOURCE_DIR}/*.ui)
+
+qt_wrap_ui(SRC_FILES ${UI_FILES})
+
+add_executable(${EXAMPLE_NAME} ${HDR_FILES} ${SRC_FILES})
+target_include_directories(${EXAMPLE_NAME} PRIVATE ${INCLUDE_DIR})
+
+target_link_libraries(${EXAMPLE_NAME} PRIVATE PopMsgBox)

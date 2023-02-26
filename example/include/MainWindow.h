@@ -1,13 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
-
-#include "PopupWindowContainer.h"
-#include <QVector>
-
-#include "EventLoop.h"
 #include <QCloseEvent>
-#include <QApplication>
 #include "PopMsgBox.h"
 
 QT_BEGIN_NAMESPACE

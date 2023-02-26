@@ -14,21 +14,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
-add_executable(${PROJECT_NAME}
-    main.cpp
-    MainWindow.cpp
-    MainWindow.h
-	PopMsgBox.cpp
-	PopMsgBox.h
-    PopupWindow.cpp
-    PopupWindow.h
-    PopupWindowContainer.cpp
-    PopupWindowContainer.h
-    MotionWatchdog.h
-    MotionWatchdog.cpp
-    EventLoop.h
-    EventLoop.cpp
-    MainWindow.ui
-)
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+file(GLOB_RECURSE HDR_FILES ${INCLUDE_DIR}/*.h ${INCLUDE_DIR}/*.hpp)
+file(GLOB_RECURSE SRC_FILES ${SOURCE_DIR}/*.cpp)
+
+add_library(${PROJECT_NAME} STATIC ${HDR_FILES} ${SRC_FILES})
+add_library(PopMsgBox ALIAS ${PROJECT_NAME})
+
+target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
+target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDE_DIR})
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/example)
