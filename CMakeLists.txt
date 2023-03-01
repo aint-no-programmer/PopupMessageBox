@@ -26,4 +26,9 @@ add_library(PopMsgBox ALIAS ${PROJECT_NAME})
 target_link_libraries(${PROJECT_NAME} PUBLIC Qt${QT_VERSION_MAJOR}::Widgets)
 target_include_directories(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIR})
 
-add_subdirectory(example)
+option(BUILD_EXAMPLE "Build with example" ON)
+
+if(BUILD_EXAMPLE)
+	add_subdirectory(example)
+	message("Build with example")
+endif()
