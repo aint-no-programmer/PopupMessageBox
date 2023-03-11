@@ -5,7 +5,7 @@
 #include "PopupWindow.h"
 #include "MotionWatchdog.h"
 
-namespace PopMsgBox
+namespace pmb
 {
 
 class PopupWindowContainer : public QObject

@@ -1,7 +1,7 @@
 #include "EventLoop.h"
 #include <QDebug>
 
-PopMsgBox::EventLoop::EventLoop(PopupWindowContainer* t_popupWindowContainer, QObject* t_parent):
+pmb::EventLoop::EventLoop(PopupWindowContainer* t_popupWindowContainer, QObject* t_parent):
 	QObject(t_parent),
 	m_popupWindowContainer(t_popupWindowContainer)
 {
@@ -23,7 +23,7 @@ PopMsgBox::EventLoop::EventLoop(PopupWindowContainer* t_popupWindowContainer, QO
 	m_stopFuture = QtConcurrent::run(this, &EventLoop::threadFunc);
 }
 
-PopMsgBox::EventLoop::~EventLoop() noexcept
+pmb::EventLoop::~EventLoop() noexcept
 {
 	enqueue([this]
 	{
@@ -35,7 +35,7 @@ PopMsgBox::EventLoop::~EventLoop() noexcept
 	PMB_TRACE("~EventLoop()")
 }
 
-void PopMsgBox::EventLoop::enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
+void pmb::EventLoop::enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color)
 {
 	enqueue([this, t_title, t_message, t_color]()
 		{
@@ -44,7 +44,7 @@ void PopMsgBox::EventLoop::enqueueMessage(const QString& t_title, const QString&
 	);
 }
 
-void PopMsgBox::EventLoop::enqueue(callable_t&& callable) noexcept
+void pmb::EventLoop::enqueue(callable_t&& callable) noexcept
 {
 	{
 		QMutexLocker lock(&m_mutex);
@@ -54,7 +54,7 @@ void PopMsgBox::EventLoop::enqueue(callable_t&& callable) noexcept
 	m_condVar.notify_one();
 }
 
-void PopMsgBox::EventLoop::threadFunc() noexcept
+void pmb::EventLoop::threadFunc() noexcept
 {
 	std::vector<callable_t> readBuffer;
 		

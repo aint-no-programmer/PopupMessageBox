@@ -13,7 +13,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-namespace PopMsgBox
+namespace pmb
 {
     class PopMsgBox : public QObject
     {

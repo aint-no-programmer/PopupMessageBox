@@ -11,7 +11,7 @@
 
 #include "PopupWindowContainer.h"
 
-namespace PopMsgBox
+namespace pmb
 {
 
 /*

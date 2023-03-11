@@ -21,7 +21,7 @@ class MainWindow : public QMainWindow
         None = 255
     };
 public:
-    using PopMsgBox = PopMsgBox::PopMsgBox;
+    using PopMsgBox = pmb::PopMsgBox;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
     void closeEvent(QCloseEvent* event) override

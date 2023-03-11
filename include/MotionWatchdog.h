@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QVector>
 
-namespace PopMsgBox
+namespace pmb
 {
 
 class PopupWindowContainer;

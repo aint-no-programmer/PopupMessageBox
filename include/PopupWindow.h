@@ -17,7 +17,7 @@
 #endif
 
 
-namespace PopMsgBox
+namespace pmb
 {
 
 class PopupWindow : public QWidget
