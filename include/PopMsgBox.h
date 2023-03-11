@@ -45,6 +45,13 @@ namespace PopMsgBox
         PopMsgBox()
         {
             const auto popupWindowContainer = new PopupWindowContainer(10000);
+
+            //move popupWindowContainer to main Gui thread if it is not there
+            if (thread() != QApplication::instance()->thread())
+        	{
+	            popupWindowContainer->moveToThread(QApplication::instance()->thread());
+            }
+
             m_eventLoop = new EventLoop(popupWindowContainer);
             connect(m_eventLoop, &EventLoop::destroyed, popupWindowContainer, &PopupWindowContainer::deleteLater, Qt::QueuedConnection);
 
