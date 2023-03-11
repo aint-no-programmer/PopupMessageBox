@@ -8,9 +8,6 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-namespace PopMsgBox
-{
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -24,6 +21,7 @@ class MainWindow : public QMainWindow
         None = 255
     };
 public:
+    using PopMsgBox = PopMsgBox::PopMsgBox;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow() override;
     void closeEvent(QCloseEvent* event) override
@@ -36,7 +34,7 @@ public:
         }
 
         PMB_TRACE("popMsgBox->stop()")
-        PopMsgBox::instance().stop();
+    	PopMsgBox::instance().stop();
         event->ignore();
         m_onClosing = true;
         connect(&PopMsgBox::instance(), &PopMsgBox::s_stopped, this, &QMainWindow::close,Qt::QueuedConnection);
@@ -66,5 +64,3 @@ private:
     QColor m_color{0,0,0,180};
     Ui::MainWindow *ui;
 };
-
-}

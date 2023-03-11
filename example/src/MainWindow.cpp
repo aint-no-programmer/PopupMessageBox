@@ -2,7 +2,7 @@
 #include "./ui_MainWindow.h"
 #include <QColorDialog>
 
-PopMsgBox::MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
@@ -36,13 +36,13 @@ PopMsgBox::MainWindow::MainWindow(QWidget *parent)
     });
 }
 
-PopMsgBox::MainWindow::~MainWindow()
+MainWindow::~MainWindow()
 {
     delete ui;
     PMB_TRACE("~MainWindow()")
 }
 
-void PopMsgBox::MainWindow::on_pushButton_clicked()
+void MainWindow::on_pushButton_clicked()
 {
     PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText().append(" %1").arg(m_counter++), ui->textEdit->toPlainText(), m_color);
 }
