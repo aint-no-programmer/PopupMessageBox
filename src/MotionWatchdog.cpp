@@ -39,7 +39,7 @@ void PopMsgBox::MotionWatchdog::onMotionFinished(QObject* t_popupWindow)
 
 	if (pos == -1)
 	{
-		qWarning() << "No such pointer in <m_observables> container.";
+		//qWarning() << "No such pointer in <m_observables> container.";
 		return;
 	}
 
