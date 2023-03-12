@@ -1,7 +1,7 @@
 ### PopupMessageBox
 Simple cross-platform Qt popup messagebox based on Evileg PopUp notification, link: https://evileg.com/en/post/146/
 ### How to use it
-![Demostration video](https://github.com/aint-no-programmer/PopupMessageBox/tree/master/screenshots/example.gif)  
+![Demostration video](./screenshots/example.gif?raw=true)  
 The example application demonstrates popup messages
 ### Build
 Qt5 needs to be installed
