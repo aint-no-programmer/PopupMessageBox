@@ -44,5 +44,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    PopMsgBox::init(4000, QEasingCurve::InQuad, 500);
     PopMsgBox::instance().enqueueMessage(ui->textEdit_2->toPlainText().append(" %1").arg(m_counter++), ui->textEdit->toPlainText(), m_color);
 }

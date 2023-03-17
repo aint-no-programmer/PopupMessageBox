@@ -21,10 +21,25 @@ namespace pmb
 
     	QPointer<EventLoop> m_eventLoop{ nullptr };
     public:
+        static PopMsgBox& init(
+            int t_displayDuration = 10000,
+            const QEasingCurve& t_movingCurve = QEasingCurve::InOutSine,
+            int t_appearanceDuration = 1000)
+        {
+            return instanceImpl(t_displayDuration, t_movingCurve, t_appearanceDuration);
+        }
+        static PopMsgBox& instanceImpl(
+            int t_displayDuration,
+            const QEasingCurve& t_movingCurve,
+            int t_appearanceDuration)
+        {
+	        static PopMsgBox instance(t_displayDuration, t_movingCurve, t_appearanceDuration);
+	        return instance;
+        }
+
         static PopMsgBox& instance()
         {
-            static PopMsgBox instance;
-            return instance;
+            return instanceImpl(10000, QEasingCurve::InOutSine, 1000);
         }
         void enqueueMessage(const QString& t_title, const QString& t_message, const QColor& t_color) const 
         {
@@ -42,9 +57,12 @@ namespace pmb
         PopMsgBox& operator=(PopMsgBox&&) = delete;
 
     private:
-        PopMsgBox()
+        PopMsgBox(
+            int t_displayDuration, 
+            const QEasingCurve& t_movingCurve,
+            int t_appearanceDuration)
         {
-            const auto popupWindowContainer = new PopupWindowContainer(10000);
+            const auto popupWindowContainer = new PopupWindowContainer(t_displayDuration, t_movingCurve, t_appearanceDuration);
 
             //move popupWindowContainer to main Gui thread if it is not there
             if (thread() != QApplication::instance()->thread())

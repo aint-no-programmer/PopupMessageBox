@@ -113,7 +113,6 @@ void pmb::PopupWindow::createMessage(const QString &t_title, const QString &t_me
     {
         m_color = t_color;
     }
-
     m_title.setText(textSplitter(t_title, 30));
     m_message.setText(textSplitter(t_message));      // Set the text in the Label
     adjustSize();                                   // With the recalculation notice sizes
@@ -141,7 +140,7 @@ void pmb::PopupWindow::moveUp(int x)
 {
     m_movementAnimation.setEndValue(QPoint(pos().x(), pos().y() - x));
     m_movementAnimation.setEasingCurve(m_movingCurve);
-    m_movementAnimation.setDuration(3000);
+    m_movementAnimation.setDuration(m_appearanceDuration);
 	m_movementAnimation.start();
     PMB_TRACE("-> m_movementAnimation.start()")
 }
