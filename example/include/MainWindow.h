@@ -49,9 +49,9 @@ private:
     {
         switch (t_messageType)
         {
-        case MessageType::Info:     return QColor(Qt::darkBlue);//QColor(0, 0, 0, 180);
-        case MessageType::Warning:  return QColor(Qt::darkYellow);
-        case MessageType::Error:    return QColor(Qt::darkRed);
+        case MessageType::Info:     return QColor(76, 110, 152, 180);//QColor(0, 0, 0, 180);
+        case MessageType::Warning:  return QColor(176, 83, 2, 180);
+        case MessageType::Error:    return QColor(188, 0, 6, 180);
         case MessageType::None:     //to default
         default:
         {
