@@ -20,6 +20,15 @@ namespace pmb
         Q_OBJECT
 
     	QPointer<EventLoop> m_eventLoop{ nullptr };
+
+        static PopMsgBox& instanceImpl(
+            int t_displayDuration,
+            const QEasingCurve& t_movingCurve,
+            int t_appearanceDuration)
+        {
+            static PopMsgBox instance(t_displayDuration, t_movingCurve, t_appearanceDuration);
+            return instance;
+        }
     public:
         static PopMsgBox& init(
             int t_displayDuration = 10000,
@@ -28,15 +37,6 @@ namespace pmb
         {
             return instanceImpl(t_displayDuration, t_movingCurve, t_appearanceDuration);
         }
-        static PopMsgBox& instanceImpl(
-            int t_displayDuration,
-            const QEasingCurve& t_movingCurve,
-            int t_appearanceDuration)
-        {
-	        static PopMsgBox instance(t_displayDuration, t_movingCurve, t_appearanceDuration);
-	        return instance;
-        }
-
         static PopMsgBox& instance()
         {
             return instanceImpl(10000, QEasingCurve::InOutSine, 1000);
