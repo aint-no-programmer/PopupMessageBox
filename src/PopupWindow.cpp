@@ -11,10 +11,14 @@ pmb::PopupWindow::PopupWindow(int t_displayDuration, const QEasingCurve& t_movin
 	m_appearanceDuration(t_appearanceDuration)
 {
     setWindowFlags(Qt::FramelessWindowHint |        // Disable window decoration
-                   Qt::Tool |                       // Discard display in a separate window
+                   Qt::ToolTip |                    /* Discard display in a separate window (like as Qt::Tool)
+                                                     * With attribute <Qt::WA_X11NetWmWindowTypeToolBar> provide non multi notification tabs in toolbar on Linux (like as Qt::SubWindow)
+                                                     * Also provides non-disappearing menu (QWidget::contextMenuEvent) in MainWindow during notification
+                                                     */
                    Qt::WindowStaysOnTopHint);       // Set on top of all windows
     setAttribute(Qt::WA_TranslucentBackground);     // Indicates that the background will be transparent
     setAttribute(Qt::WA_ShowWithoutActivating);     // At the show, the widget does not get the focus automatically
+    setAttribute(Qt::WA_X11NetWmWindowTypeToolBar); // see above about <Qt::SubWindow>
 
     m_opacityAnimation.setTargetObject(this);                // Set the target animation
     m_opacityAnimation.setPropertyName("popupOpacity");
